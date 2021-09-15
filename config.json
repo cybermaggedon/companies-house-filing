@@ -1,0 +1,17 @@
+{
+    "presenter-id": "<PRESENTER>",
+    "authentication": "<AUTHENT>",
+    "company-number": "12345678",
+    "company-name": "TEST COMPANY LIMITED",
+    "email": "test@example.org",
+    "company-type": "EW",
+    "contact-name": "Jill Lazula",
+    "contact-number": "07900 123456",
+    "made-up-date": "2016-05-13",
+    "date-signed": "2019-01-01",
+    "date": "2021-09-14",
+    "test-flag": "1",
+    "package-reference": "0000",
+    "company-authentication-code": "ABCD1234",
+    "url": "https://xmlgw.companieshouse.gov.uk/v1-0/xmlgw/Gateway"
+}
