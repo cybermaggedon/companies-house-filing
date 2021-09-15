@@ -2,6 +2,23 @@
 from lxml import objectify, etree
 import requests
 
+class AuthenticationFailure(RuntimeError):
+    pass
+
+# Error 9999 is not documented.
+class SuspectedAccountsCorruption(RuntimeError):
+    pass
+
+# Error 100 is not documented.
+class SuspectedValidationFailure(RuntimeError):
+    pass
+
+class RequestFailure(RuntimeError):
+    pass
+
+class PrivacyFailure(RuntimeError):
+    pass
+
 class Client:
 
     def __init__(self, state):
@@ -19,7 +36,14 @@ class Client:
         objectify.deannotate(env, cleanup_namespaces=True)
         enc = etree.tostring(env, pretty_print=True, xml_declaration=True)
 
-        resp = requests.post(self.state.get("url"), data=enc, headers=header)
+        try:
+            resp = requests.post(self.state.get("url"), data=enc,
+                                 headers=header)
+        except requests.exceptions.SSLError as e:
+            raise PrivacyFailure(str(e))
+        except requests.exceptions.ConnectionError as e:
+            raise RequestFailure(str(e))
+            
 
         if resp.status_code != 200:
             raise RuntimeError("Status " + str(resp.status_code))
@@ -34,9 +58,19 @@ class Client:
         err = None
         try:
             for err in env.GovTalkDetails.GovTalkErrors.Error:
-                err = err.Text
+
+                errno = int(err.Number)
+
+                if errno == 502:
+                    err = AuthenticationFailure(err.Text)
+                if errno == 9999:
+                    err = SuspectedAccountsCorruption(err.Text)
+                if errno == 100:
+                    err = SuspectedValidationFailure(err.Text)
+                else:
+                    err = RuntimeError(err.Text)
                 break
         except:
             # No errors.
             pass
-        if err: raise RuntimeError(err)
+        if err: raise err

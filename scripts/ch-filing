@@ -4,7 +4,7 @@ import sys
 import argparse
 from lxml import objectify
 
-from ch_filing.client import Client
+from ch_filing.client import *
 from ch_filing.state import State
 from ch_filing.company_data import CompanyData
 from ch_filing.envelope import Envelope
@@ -80,11 +80,9 @@ try:
 
         content = Accounts.create_submission(st, args.accounts, data)
         sub_id = content.FormHeader.SubmissionNumber.text
-        print(sub_id)
         env = Envelope.create(st, content,
                               content.FormHeader.FormIdentifier.text,
                               "request")
-        print(env)
         renv = cli.call(st, env)
         print("Submission completed.")
         print("Submission ID is:", sub_id)
@@ -106,8 +104,24 @@ try:
 
         raise RuntimeError("Need to specify an operation to perform.")
 
-except Exception as e:
-
+except AuthenticationFailure as e:
     print("Exception:", e)
-
+    print("Check your configuration to ensure the company number, and "
+          "authentication code")
+    print("are correct.")
+except RequestFailure as e:
+    print("Exception:", e)
+    print("Request could not be completed.  Service problems suspected.")
+    print("Try again later?")
+except SuspectedAccountsCorruption as e:
+    print("Exception:", e)
+    print("Suspected error in submitted account data.")
+except SuspectedValidationFailure as e:
+    print("Exception:", e)
+    print("Suspected error in submitted message.  Failed validation check?")
+except PrivacyFailure as e:
+    print("Exception:", e)
+    print("Failure in security transport!  Host certificate may be invalid.")
+except Exception as e:
+    print("Exception:", e)
 
