@@ -22,8 +22,10 @@ Software Filing API.
 ## Credentials
 
 In order to use this, you need production credentials (presenter ID,
-authentication value and the company authentication code) for the
+authentication value and the company authentication code) for the company
+you are filing for.
 
+Companies House documentation:
 - [Software Filing](https://www.gov.uk/government/organisations/companies-house/about-our-services#software-filing)
 - [Developer information](http://xmlgw.companieshouse.gov.uk/SchemaStatus)
 
@@ -45,7 +47,8 @@ you.  Check the credentials work by fetching company information:
 % ch-filing --get-company-data
 ```
 
-Once you are ready to file:
+Company accounts should be an iXBRL file which conforms to the CH
+accepted taxonomies.  Once you are ready to file:
 
 ```
 % ch-filing --submit-accounts --accounts accts.html
