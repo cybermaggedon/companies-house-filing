@@ -94,7 +94,7 @@ optional arguments:
 
 ## Warranty
 
-This code comes with no warranty whatsoever.  See the [LICENSE](LICENCE) file
+This code comes with no warranty whatsoever.  See the [LICENCE](LICENSE) file
 for details.  Further, I am not an accountant.  It is possible that this code
 could be useful to you in meeting regulatory reporting requirements for your
 business.  It is also possible that the software could report misleading
