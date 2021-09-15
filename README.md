@@ -88,8 +88,6 @@ optional arguments:
                         Submission ID of previous filing
 ```
 
-## What it does
-
 # Licences, Compliance, etc.
 
 ## Warranty
