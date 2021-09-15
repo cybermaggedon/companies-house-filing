@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="gnucash-uk-corptax",
+    name="gnucash-ch-filing",
     version="0.1",
     author="Cybermaggedon",
     author_email="mark@cyberapocalypse.co.uk",
