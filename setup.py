@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="gnucash-ch-filing",
-    version="0.1",
+    version="0.2",
     author="Cybermaggedon",
     author_email="mark@cyberapocalypse.co.uk",
     description="UK Companies House accounts filing for GnuCash users",
@@ -19,7 +19,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.6',
-    download_url = "https://github.com/cybermaggedon/gnucash-uk-corptax/archive/refs/tags/v0.1.tar.gz",
+    download_url = "https://github.com/cybermaggedon/gnucash-uk-corptax/archive/refs/tags/v0.2.tar.gz",
     install_requires=[
         'lxml',
         'requests'
