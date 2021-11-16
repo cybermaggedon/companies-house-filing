@@ -32,6 +32,9 @@ parser.add_argument('--submit-accounts', '-S',
 parser.add_argument('--get-submission-status', '-G',
                     action="store_true", default=False,
                     help='Get status of previous filing')
+parser.add_argument('--accounts-image',
+                    action="store_true", default=False,
+                    help='Get accounts image')
 parser.add_argument('--submission-id', '-i',
                     help='Submission ID of previous filing')
 
@@ -99,6 +102,21 @@ try:
     
         for status in renv.Body.SubmissionStatus.Status:
             print("%s: %s" % (status.SubmissionNumber, status.StatusCode))
+
+    elif args.accounts_image:
+
+        if args.accounts:
+            data = open(args.accounts).read()
+        else:
+            raise RuntimeError("--accounts must be specified")
+
+        content = Accounts.create_submission(st, args.accounts, data)
+
+        env = Envelope.create(st, content, "AccountsImage", "request")
+        renv = cli.call(st, env)
+
+        data = renv.Body.Document.DocumentData
+        print(str(data))
 
     else:
 
