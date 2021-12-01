@@ -1,7 +1,7 @@
 {
     "presenter-id": "<PRESENTER>",
     "authentication": "<AUTHENT>",
-    "company-number": "12345678",
+    "company-number": "01234567",
     "company-name": "TEST COMPANY LIMITED",
     "email": "test@example.org",
     "company-type": "EW",

@@ -115,7 +115,7 @@ try:
         env = Envelope.create(st, content, "AccountsImage", "request")
         renv = cli.call(st, env)
 
-        data = renv.Body.Document.DocumentData
+        data = renv.Body
         print(str(data))
 
     else:
