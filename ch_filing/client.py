@@ -43,7 +43,6 @@ class Client:
             raise PrivacyFailure(str(e))
         except requests.exceptions.ConnectionError as e:
             raise RequestFailure(str(e))
-            
 
         if resp.status_code != 200:
             raise RuntimeError("Status " + str(resp.status_code))
