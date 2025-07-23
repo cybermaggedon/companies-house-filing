@@ -2,6 +2,7 @@
 import sys
 import argparse
 from lxml import objectify
+import os
 
 from ch_filing.client import *
 from ch_filing.state import State
@@ -85,7 +86,10 @@ def main():
             else:
                 raise RuntimeError("--accounts must be specified")
 
-            content = Accounts.create_submission(st, args.accounts, data)
+            filename = os.path.basename(args.accounts)
+
+            content = Accounts.create_submission(st, filename, data)
+
             sub_id = content.FormHeader.SubmissionNumber.text
             env = Envelope.create(st, content,
                                   content.FormHeader.FormIdentifier.text,
