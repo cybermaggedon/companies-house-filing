@@ -1,0 +1,114 @@
+name: Validate Workflows
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+  push:
+    paths:
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate workflow syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+
+      - name: Validate workflow files
+        run: |
+          echo "Validating GitHub Actions workflow syntax..."
+          
+          for workflow in .github/workflows/*.yaml .github/workflows/*.yml; do
+            if [ -f "$workflow" ]; then
+              echo "Checking $workflow..."
+              # Basic YAML syntax validation
+              python3 -c "
+              import yaml, sys
+              try:
+                  with open('$workflow', 'r') as f:
+                      yaml.safe_load(f)
+                  print('✓ $workflow: Valid YAML syntax')
+              except yaml.YAMLError as e:
+                  print('✗ $workflow: Invalid YAML syntax')
+                  print(e)
+                  sys.exit(1)
+              except Exception as e:
+                  print('✗ $workflow: Error reading file')
+                  print(e)
+                  sys.exit(1)
+              "
+            fi
+          done
+
+      - name: Check for common workflow issues
+        run: |
+          echo "Checking for common workflow issues..."
+          
+          # Check for proper permissions
+          grep -r "permissions:" .github/workflows/ || echo "⚠ Consider adding explicit permissions to workflows"
+          
+          # Check for pinned action versions
+          if grep -r "uses.*@main\|uses.*@master" .github/workflows/; then
+            echo "⚠ Consider pinning action versions instead of using @main/@master"
+          fi
+          
+          # Check for secrets in workflow files (basic check)
+          if grep -ri "password\|token\|secret\|key" .github/workflows/ | grep -v "secrets\." | grep -v "GITHUB_TOKEN"; then
+            echo "⚠ Potential hardcoded secrets found in workflows"
+          fi
+          
+          echo "✓ Workflow validation completed"
+
+  test-workflow-components:
+    name: Test workflow components
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Test package installation steps
+        run: |
+          # Simulate the installation steps from CI workflow
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt-dev
+          python -m pip install --upgrade pip
+          pip install -e .[test]
+
+      - name: Test CLI commands exist
+        run: |
+          # Test that CLI commands referenced in workflows actually work
+          ch-filing --help > /dev/null
+          ch-mock-server --help > /dev/null
+          python -m ch_filing --help > /dev/null
+          python -m ch_filing.test_server --help > /dev/null
+          echo "✓ All CLI commands are working"
+
+      - name: Test import statements
+        run: |
+          # Test import statements used in workflows
+          python -c "import ch_filing; print('✓ ch_filing imports')"
+          python -c "from ch_filing.client import Client; print('✓ Client imports')"
+          python -c "from ch_filing.test_server import MockServer; print('✓ MockServer imports')"
+
+      - name: Test basic functionality
+        run: |
+          # Run a minimal version of what the workflows test
+          pytest tests/unit/test_envelope.py -v
+          echo "✓ Basic functionality test passed"
