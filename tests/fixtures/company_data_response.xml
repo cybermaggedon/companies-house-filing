@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <EnvelopeVersion>2.0</EnvelopeVersion>
+    <Header>
+        <MessageDetails>
+            <Class>CompanyDataResponse</Class>
+            <Qualifier>response</Qualifier>
+            <TransactionID>1</TransactionID>
+            <ResponseEndPoint>
+                <PollInterval>10</PollInterval>
+            </ResponseEndPoint>
+        </MessageDetails>
+        <SenderDetails>
+            <IDAuthentication>
+                <SenderID>TEST_SENDER_ID</SenderID>
+                <Authentication>
+                    <Method>MD5</Method>
+                    <Value>testhash123</Value>
+                </Authentication>
+            </IDAuthentication>
+        </SenderDetails>
+    </Header>
+    <GovTalkDetails>
+        <Keys/>
+    </GovTalkDetails>
+    <Body>
+        <CompanyData xmlns="http://xmlgw.companieshouse.gov.uk">
+            <CompanyNumber>12345678</CompanyNumber>
+            <CompanyName>TEST COMPANY LIMITED</CompanyName>
+            <CompanyCategory>Private Limited Company</CompanyCategory>
+            <CompanyStatus>Active</CompanyStatus>
+            <CompanyType>ltd</CompanyType>
+            <IncorporationDate>2020-01-15</IncorporationDate>
+            <DissolutionDate xsi:nil="true"/>
+            <Jurisdiction>England/Wales</Jurisdiction>
+            <RegisteredOffice>
+                <Premise>123</Premise>
+                <AddressLine>Test Street</AddressLine>
+                <PostTown>Test Town</PostTown>
+                <County>Test County</County>
+                <Country>England</Country>
+                <Postcode>TE5 7ST</Postcode>
+            </RegisteredOffice>
+            <Accounts>
+                <AccountRefDate>2023-12-31</AccountRefDate>
+                <NextDueDate>2024-09-30</NextDueDate>
+                <LastMadeUpDate>2022-12-31</LastMadeUpDate>
+                <AccountCategory>FULL</AccountCategory>
+            </Accounts>
+            <Returns>
+                <NextDueDate>2024-02-12</NextDueDate>
+                <LastMadeUpDate>2023-01-12</LastMadeUpDate>
+            </Returns>
+            <Mortgages>
+                <NumMortCharges>0</NumMortCharges>
+                <NumMortOutstanding>0</NumMortOutstanding>
+                <NumMortPartiallySatisfied>0</NumMortPartiallySatisfied>
+                <NumMortSatisfied>0</NumMortSatisfied>
+            </Mortgages>
+            <SICCodes>
+                <SICText>
+                    <SICCode>62012</SICCode>
+                    <SICDescription>Business and domestic software development</SICDescription>
+                </SICText>
+                <SICText>
+                    <SICCode>62020</SICCode>
+                    <SICDescription>Information technology consultancy activities</SICDescription>
+                </SICText>
+            </SICCodes>
+            <PreviousNames/>
+        </CompanyData>
+    </Body>
+</GovTalkMessage>

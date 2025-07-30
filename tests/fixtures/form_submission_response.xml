@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <EnvelopeVersion>2.0</EnvelopeVersion>
+    <Header>
+        <MessageDetails>
+            <Class>FormSubmissionResponse</Class>
+            <Qualifier>response</Qualifier>
+            <TransactionID>2</TransactionID>
+            <ResponseEndPoint>
+                <PollInterval>10</PollInterval>
+            </ResponseEndPoint>
+        </MessageDetails>
+        <SenderDetails>
+            <IDAuthentication>
+                <SenderID>TEST_SENDER_ID</SenderID>
+                <Authentication>
+                    <Method>MD5</Method>
+                    <Value>testhash456</Value>
+                </Authentication>
+            </IDAuthentication>
+        </SenderDetails>
+    </Header>
+    <GovTalkDetails>
+        <Keys/>
+    </GovTalkDetails>
+    <Body>
+        <SubmissionResponse xmlns="http://xmlgw.companieshouse.gov.uk/Header">
+            <TransactionID>2</TransactionID>
+            <SubmissionNumber>S00001</SubmissionNumber>
+            <CompanyNumber>12345678</CompanyNumber>
+            <FormType>Accounts</FormType>
+            <PresenterID>TEST_PRESENTER_123</PresenterID>
+            <CompanyName>TEST COMPANY LIMITED</CompanyName>
+            <SubmissionStatus>accepted</SubmissionStatus>
+            <ProcessedDate>2024-01-20T10:30:00</ProcessedDate>
+            <FeeDetails>
+                <Description>Annual accounts filing</Description>
+                <Amount>0.00</Amount>
+                <Currency>GBP</Currency>
+                <PaymentMethod>N/A</PaymentMethod>
+            </FeeDetails>
+            <AcceptanceDetails>
+                <BarCode>Y9V4P8L2K1</Barcode>
+                <DocumentReceivedDate>2024-01-20T10:30:00</DocumentReceivedDate>
+                <AcceptedDate>2024-01-20T10:35:00</AcceptedDate>
+            </AcceptanceDetails>
+        </SubmissionResponse>
+    </Body>
+</GovTalkMessage>

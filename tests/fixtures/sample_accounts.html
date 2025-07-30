@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ix="http://www.xbrl.org/2013/inlineXBRL">
+<head>
+    <meta charset="utf-8"/>
+    <title>Sample Company Limited - Annual Accounts</title>
+    <style type="text/css">
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .company-info { margin-bottom: 20px; }
+        .financial-statement { margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; }
+        .amount { text-align: right; }
+        .total { font-weight: bold; border-top: 2px solid #000; }
+        .notes { font-size: 0.9em; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1><ix:nonNumeric name="uk-bus:EntityCurrentLegalOrRegisteredName" 
+            contextRef="period">Sample Company Limited</ix:nonNumeric></h1>
+        <h2>Annual Accounts for the year ended 31 December 2023</h2>
+        <p>Company Number: <ix:nonNumeric name="uk-bus:UKCompaniesHouseRegisteredNumber" 
+           contextRef="period">12345678</ix:nonNumeric></p>
+    </div>
+    
+    <div class="company-info">
+        <h3>Company Information</h3>
+        <p><strong>Registered Office:</strong><br/>
+        <ix:nonNumeric name="uk-bus:RegisteredOfficeAddressLine1" contextRef="period">123 Test Street</ix:nonNumeric><br/>
+        <ix:nonNumeric name="uk-bus:RegisteredOfficeAddressLine2" contextRef="period">Test Town</ix:nonNumeric><br/>
+        <ix:nonNumeric name="uk-bus:RegisteredOfficePostcode" contextRef="period">TE5 7ST</ix:nonNumeric></p>
+        
+        <p><strong>Principal Activities:</strong><br/>
+        <ix:nonNumeric name="uk-bus:DescriptionPrincipalActivities" contextRef="period">Software development and IT consultancy services</ix:nonNumeric></p>
+    </div>
+    
+    <div class="financial-statement">
+        <h3>Balance Sheet as at 31 December 2023</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Assets</th>
+                    <th class="amount">2023 (£)</th>
+                    <th class="amount">2022 (£)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Fixed Assets</strong></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Tangible assets</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:TangibleFixedAssets" 
+                            contextRef="period-end" unitRef="GBP" decimals="0">75000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:TangibleFixedAssets" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0">80000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Current Assets</strong></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Debtors</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:DebtorsDueWithinOneYear" 
+                            contextRef="period-end" unitRef="GBP" decimals="0">45000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:DebtorsDueWithinOneYear" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0">38000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cash at bank and in hand</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CashBankInHand" 
+                            contextRef="period-end" unitRef="GBP" decimals="0">25000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CashBankInHand" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0">22000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Total current assets</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CurrentAssets" 
+                            contextRef="period-end" unitRef="GBP" decimals="0">70000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CurrentAssets" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0">60000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Creditors: amounts falling due within one year</strong></td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CreditorsDueWithinOneYear" 
+                            contextRef="period-end" unitRef="GBP" decimals="0" sign="-">-20000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CreditorsDueWithinOneYear" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0" sign="-">-18000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Net current assets</strong></td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:NetCurrentAssetsLiabilities" 
+                            contextRef="period-end" unitRef="GBP" decimals="0">50000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:NetCurrentAssetsLiabilities" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0">42000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr class="total">
+                    <td><strong>Total assets less current liabilities</strong></td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:TotalAssetsLessCurrentLiabilities" 
+                            contextRef="period-end" unitRef="GBP" decimals="0">125000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:TotalAssetsLessCurrentLiabilities" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0">122000</ix:nonFraction>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h4>Capital and Reserves</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th class="amount">2023 (£)</th>
+                    <th class="amount">2022 (£)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Called up share capital</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CalledUpShareCapital" 
+                            contextRef="period-end" unitRef="GBP" decimals="0">100</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CalledUpShareCapital" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0">100</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Profit and loss account</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:ProfitLossAccountReserve" 
+                            contextRef="period-end" unitRef="GBP" decimals="0">124900</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:ProfitLossAccountReserve" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0">121900</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr class="total">
+                    <td><strong>Total shareholders' funds</strong></td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:TotalShareholdersFunds" 
+                            contextRef="period-end" unitRef="GBP" decimals="0">125000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:TotalShareholdersFunds" 
+                            contextRef="period-end-previous" unitRef="GBP" decimals="0">122000</ix:nonFraction>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="financial-statement">
+        <h3>Profit and Loss Account for the year ended 31 December 2023</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th class="amount">2023 (£)</th>
+                    <th class="amount">2022 (£)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Turnover</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:Turnover" 
+                            contextRef="period" unitRef="GBP" decimals="0">200000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:Turnover" 
+                            contextRef="period-previous" unitRef="GBP" decimals="0">180000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cost of sales</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CostSales" 
+                            contextRef="period" unitRef="GBP" decimals="0" sign="-">-120000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:CostSales" 
+                            contextRef="period-previous" unitRef="GBP" decimals="0" sign="-">-108000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Gross profit</strong></td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:GrossProfit" 
+                            contextRef="period" unitRef="GBP" decimals="0">80000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:GrossProfit" 
+                            contextRef="period-previous" unitRef="GBP" decimals="0">72000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Administrative expenses</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:AdministrativeExpenses" 
+                            contextRef="period" unitRef="GBP" decimals="0" sign="-">-74000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:AdministrativeExpenses" 
+                            contextRef="period-previous" unitRef="GBP" decimals="0" sign="-">-66000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Operating profit</strong></td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:OperatingProfitLoss" 
+                            contextRef="period" unitRef="GBP" decimals="0">6000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:OperatingProfitLoss" 
+                            contextRef="period-previous" unitRef="GBP" decimals="0">6000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Interest payable</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:InterestPayableAndSimilarCharges" 
+                            contextRef="period" unitRef="GBP" decimals="0" sign="-">-200</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:InterestPayableAndSimilarCharges" 
+                            contextRef="period-previous" unitRef="GBP" decimals="0" sign="-">-150</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Profit before taxation</strong></td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:ProfitLossBeforeTax" 
+                            contextRef="period" unitRef="GBP" decimals="0">5800</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:ProfitLossBeforeTax" 
+                            contextRef="period-previous" unitRef="GBP" decimals="0">5850</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tax on profit</td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:TaxOnProfitOrLossOnOrdinaryActivities" 
+                            contextRef="period" unitRef="GBP" decimals="0" sign="-">-2800</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:TaxOnProfitOrLossOnOrdinaryActivities" 
+                            contextRef="period-previous" unitRef="GBP" decimals="0" sign="-">-2850</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr class="total">
+                    <td><strong>Profit for the financial year</strong></td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:ProfitLossForPeriod" 
+                            contextRef="period" unitRef="GBP" decimals="0">3000</ix:nonFraction>
+                    </td>
+                    <td class="amount">
+                        <ix:nonFraction name="uk-bus:ProfitLossForPeriod" 
+                            contextRef="period-previous" unitRef="GBP" decimals="0">3000</ix:nonFraction>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="notes">
+        <h3>Notes to the Financial Statements</h3>
+        <p><strong>1. Accounting Policies</strong><br/>
+        The financial statements have been prepared under the historical cost convention and in accordance with applicable UK accounting standards.</p>
+        
+        <p><strong>2. Turnover</strong><br/>
+        Turnover represents the amounts (excluding VAT) derived from the provision of software development and consultancy services in the UK.</p>
+        
+        <p><strong>3. Employees</strong><br/>
+        The average number of employees during the year was <ix:nonFraction name="uk-bus:AverageNumberEmployeesDuringPeriod" contextRef="period" unitRef="pure" decimals="0">3</ix:nonFraction> (2022: <ix:nonFraction name="uk-bus:AverageNumberEmployeesDuringPeriod" contextRef="period-previous" unitRef="pure" decimals="0">3</ix:nonFraction>).</p>
+        
+        <p><strong>4. Directors</strong><br/>
+        <ix:nonNumeric name="uk-bus:DirectorSigningAccounts" contextRef="period">J. Smith</ix:nonNumeric><br/>
+        Director<br/>
+        Date: <ix:nonNumeric name="uk-bus:DateSigningAccounts" contextRef="period" format="ixt:datedaymonthyearen">15 January 2024</ix:nonNumeric></p>
+    </div>
+    
+    <!-- XBRL Contexts and Units (Hidden) -->
+    <ix:resources>
+        <ix:context id="period">
+            <ix:entity>
+                <ix:identifier scheme="http://www.companieshouse.gov.uk/">12345678</ix:identifier>
+            </ix:entity>
+            <ix:period>
+                <ix:startDate>2023-01-01</ix:startDate>
+                <ix:endDate>2023-12-31</ix:endDate>
+            </ix:period>
+        </ix:context>
+        
+        <ix:context id="period-previous">
+            <ix:entity>
+                <ix:identifier scheme="http://www.companieshouse.gov.uk/">12345678</ix:identifier>
+            </ix:entity>
+            <ix:period>
+                <ix:startDate>2022-01-01</ix:startDate>
+                <ix:endDate>2022-12-31</ix:endDate>
+            </ix:period>
+        </ix:context>
+        
+        <ix:context id="period-end">
+            <ix:entity>
+                <ix:identifier scheme="http://www.companieshouse.gov.uk/">12345678</ix:identifier>
+            </ix:entity>
+            <ix:period>
+                <ix:instant>2023-12-31</ix:instant>
+            </ix:period>
+        </ix:context>
+        
+        <ix:context id="period-end-previous">
+            <ix:entity>
+                <ix:identifier scheme="http://www.companieshouse.gov.uk/">12345678</ix:identifier>
+            </ix:entity>
+            <ix:period>
+                <ix:instant>2022-12-31</ix:instant>
+            </ix:period>
+        </ix:context>
+        
+        <ix:unit id="GBP">
+            <ix:measure>iso4217:GBP</ix:measure>
+        </ix:unit>
+        
+        <ix:unit id="pure">
+            <ix:measure>xbrli:pure</ix:measure>
+        </ix:unit>
+    </ix:resources>
+</body>
+</html>
