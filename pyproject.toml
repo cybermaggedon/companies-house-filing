@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "gnucash-ch-filing"
+name = "companies-house-filing"
 dynamic = ["version"]
 description = "UK Companies House accounts filing for GnuCash users"
 readme = "README.md"
