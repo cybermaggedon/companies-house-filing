@@ -153,18 +153,30 @@ class TestNetworkResilienceIntegration:
                 content = CompanyData.create_request(test_state)
                 envelope = Envelope.create(test_state, content, "CompanyDataRequest", "request")
                 
-                # Client doesn't catch specific timeout types - they propagate as-is
-                with pytest.raises(type(timeout_exception)) as exc_info:
+                # ConnectTimeout inherits from ConnectionError, so client catches it as RequestFailure
+                if isinstance(timeout_exception, requests.exceptions.ConnectTimeout):
+                    expected_exception = RequestFailure
+                else:
+                    # Other timeout types propagate as-is since client doesn't catch them
+                    expected_exception = type(timeout_exception)
+                
+                with pytest.raises(expected_exception) as exc_info:
                     test_client.call(test_state, envelope)
                 
-                assert timeout_name.replace("_", " ") in str(exc_info.value).lower() or "timeout" in str(exc_info.value).lower()
+                assert "timeout" in str(exc_info.value).lower()
     
-    def test_dns_resolution_failures(self, test_state):
+    def test_dns_resolution_failures(self, test_state, tmp_path):
         """Test handling of DNS resolution failures"""
         # Create client with invalid hostname
-        invalid_state = State(test_state.config_file, test_state.state_file)
-        invalid_state.set("url", "http://nonexistent.companieshouse.invalid/v1-0/xmlgw/Gateway")
+        config_file = tmp_path / "invalid_dns_config.json"
+        config_data = test_state.config.copy()
+        config_data["url"] = "http://nonexistent.companieshouse.invalid/v1-0/xmlgw/Gateway"
         
+        with open(config_file, 'w') as f:
+            json.dump(config_data, f)
+            
+        state_file = tmp_path / "invalid_dns_state.json" 
+        invalid_state = State(str(config_file), str(state_file))
         client = Client(invalid_state)
         
         content = CompanyData.create_request(invalid_state)
@@ -179,12 +191,18 @@ class TestNetworkResilienceIntegration:
             "name", "resolution", "connection", "failed", "unreachable"
         ])
     
-    def test_server_unavailable_scenarios(self, test_state, test_client):
+    def test_server_unavailable_scenarios(self, test_state, tmp_path):
         """Test handling when server is completely unavailable"""
         # Test with server that immediately refuses connections
-        unavailable_state = State(test_state.config_file, test_state.state_file)
-        unavailable_state.set("url", "http://localhost:9999/v1-0/xmlgw/Gateway")  # Unused port
+        config_file = tmp_path / "unavailable_config.json"
+        config_data = test_state.config.copy()
+        config_data["url"] = "http://localhost:9999/v1-0/xmlgw/Gateway"  # Unused port
         
+        with open(config_file, 'w') as f:
+            json.dump(config_data, f)
+            
+        state_file = tmp_path / "unavailable_state.json"
+        unavailable_state = State(str(config_file), str(state_file))
         unavailable_client = Client(unavailable_state)
         
         content = CompanyData.create_request(unavailable_state)
@@ -236,8 +254,8 @@ class TestNetworkResilienceIntegration:
     
     def test_large_response_handling(self, test_state, test_client):
         """Test handling of unusually large responses"""
-        # Create a large response with repeated elements
-        large_body_content = "<LargeData>" + ("x" * 10000) + "</LargeData>" * 100
+        # Create a large response with repeated elements (properly closed XML)
+        large_data_elements = "".join([f"<LargeData{i}>{'x' * 1000}</LargeData{i}>" for i in range(100)])
         large_response = f"""<?xml version="1.0" encoding="UTF-8"?>
 <GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope">
     <EnvelopeVersion>2.0</EnvelopeVersion>
@@ -246,7 +264,7 @@ class TestNetworkResilienceIntegration:
     <Body>
         <CompanyDataResponse>
             <CompanyNumber>12345678</CompanyNumber>
-            {large_body_content}
+            {large_data_elements}
         </CompanyDataResponse>
     </Body>
 </GovTalkMessage>"""
@@ -265,15 +283,23 @@ class TestNetworkResilienceIntegration:
             assert hasattr(response, 'Body')
             assert hasattr(response.Body.CompanyDataResponse, 'CompanyNumber')
     
-    def test_concurrent_request_handling(self, test_state):
+    def test_concurrent_request_handling(self, test_state, tmp_path):
         """Test handling of concurrent requests"""
         results = []
         errors = []
         
-        def make_request(client, request_id):
+        def make_request(request_id):
             try:
-                # Create unique state for each thread to avoid conflicts
-                thread_state = State(test_state.config_file, test_state.state_file)
+                # Create unique state file for each thread to avoid conflicts
+                thread_config_file = tmp_path / f"thread_{request_id}_config.json"
+                thread_state_file = tmp_path / f"thread_{request_id}_state.json"
+                
+                config_data = test_state.config.copy()
+                with open(thread_config_file, 'w') as f:
+                    json.dump(config_data, f)
+                
+                thread_state = State(str(thread_config_file), str(thread_state_file))
+                client = Client(thread_state)
                 
                 content = CompanyData.create_request(thread_state)
                 envelope = Envelope.create(thread_state, content, "CompanyDataRequest", "request")
@@ -298,10 +324,9 @@ class TestNetworkResilienceIntegration:
         
         # Create multiple threads making concurrent requests
         threads = []
-        clients = [Client(test_state) for _ in range(5)]
         
-        for i, client in enumerate(clients):
-            thread = threading.Thread(target=make_request, args=(client, f"req_{i}"))
+        for i in range(5):
+            thread = threading.Thread(target=make_request, args=(f"req_{i}",))
             threads.append(thread)
             thread.start()
         
@@ -404,12 +429,9 @@ class TestNetworkResilienceIntegration:
                 content = CompanyData.create_request(test_state)
                 envelope = Envelope.create(test_state, content, "CompanyDataRequest", "request")
                 
-                # Client should catch connection-related proxy errors as RequestFailure
+                # Both ProxyError and ConnectTimeout inherit from ConnectionError, so both get caught as RequestFailure
                 if isinstance(proxy_exception, (requests.exceptions.ProxyError, requests.exceptions.ConnectTimeout)):
-                    if "connection" in str(proxy_exception).lower():
-                        expected_exception = RequestFailure
-                    else:
-                        expected_exception = type(proxy_exception)
+                    expected_exception = RequestFailure
                 else:
                     expected_exception = type(proxy_exception)
                 
