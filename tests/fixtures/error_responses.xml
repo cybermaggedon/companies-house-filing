@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Collection of various error response templates -->
+
+<!-- Authentication Error (502) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <EnvelopeVersion>2.0</EnvelopeVersion>
+    <Header>
+        <MessageDetails>
+            <Class>CompanyDataRequest</Class>
+            <Qualifier>error</Qualifier>
+            <TransactionID>1</TransactionID>
+        </MessageDetails>
+    </Header>
+    <GovTalkDetails>
+        <GovTalkErrors>
+            <Error>
+                <RaisedBy>CH</RaisedBy>
+                <Number>502</Number>
+                <Type>fatal</Type>
+                <Text>Authentication failure. Please check your presenter ID and authentication code.</Text>
+                <Location>Header/SenderDetails/IDAuthentication</Location>
+            </Error>
+        </GovTalkErrors>
+    </GovTalkDetails>
+    <Body/>
+</GovTalkMessage>
+
+<!-- Validation Error (100) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <EnvelopeVersion>2.0</EnvelopeVersion>
+    <Header>
+        <MessageDetails>
+            <Class>FormSubmission</Class>
+            <Qualifier>error</Qualifier>
+            <TransactionID>2</TransactionID>
+        </MessageDetails>
+    </Header>
+    <GovTalkDetails>
+        <GovTalkErrors>
+            <Error>
+                <RaisedBy>CH</RaisedBy>
+                <Number>100</Number>
+                <Type>fatal</Type>
+                <Text>Validation error: Required field 'CompanyName' is missing or invalid.</Text>
+                <Location>Body/FormSubmission/FormHeader/CompanyName</Location>
+            </Error>
+        </GovTalkErrors>
+    </GovTalkDetails>
+    <Body/>
+</GovTalkMessage>
+
+<!-- Accounts Corruption Error (9999) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <EnvelopeVersion>2.0</EnvelopeVersion>
+    <Header>
+        <MessageDetails>
+            <Class>FormSubmission</Class>
+            <Qualifier>error</Qualifier>
+            <TransactionID>3</TransactionID>
+        </MessageDetails>
+    </Header>
+    <GovTalkDetails>
+        <GovTalkErrors>
+            <Error>
+                <RaisedBy>CH</RaisedBy>
+                <Number>9999</Number>
+                <Type>fatal</Type>
+                <Text>Suspected accounts corruption detected. Please verify your accounts data.</Text>
+                <Location>Body/FormSubmission/Document/Data</Location>
+            </Error>
+        </GovTalkErrors>
+    </GovTalkDetails>
+    <Body/>
+</GovTalkMessage>
+
+<!-- Company Not Found Error (1001) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <EnvelopeVersion>2.0</EnvelopeVersion>
+    <Header>
+        <MessageDetails>
+            <Class>CompanyDataRequest</Class>
+            <Qualifier>error</Qualifier>
+            <TransactionID>4</TransactionID>
+        </MessageDetails>
+    </Header>
+    <GovTalkDetails>
+        <GovTalkErrors>
+            <Error>
+                <RaisedBy>CH</RaisedBy>
+                <Number>1001</Number>
+                <Type>fatal</Type>
+                <Text>Company not found: 99999999. Please check the company number.</Text>
+                <Location>Body/CompanyDataRequest/CompanyNumber</Location>
+            </Error>
+        </GovTalkErrors>
+    </GovTalkDetails>
+    <Body/>
+</GovTalkMessage>
+
+<!-- Service Unavailable Error (503) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <EnvelopeVersion>2.0</EnvelopeVersion>
+    <Header>
+        <MessageDetails>
+            <Class>FormSubmission</Class>
+            <Qualifier>error</Qualifier>
+            <TransactionID>5</TransactionID>
+        </MessageDetails>
+    </Header>
+    <GovTalkDetails>
+        <GovTalkErrors>
+            <Error>
+                <RaisedBy>CH</RaisedBy>
+                <Number>503</Number>
+                <Type>transient</Type>
+                <Text>Service temporarily unavailable. Please try again later.</Text>
+                <Location/>
+            </Error>
+        </GovTalkErrors>
+    </GovTalkDetails>
+    <Body/>
+</GovTalkMessage>
+
+<!-- Schema Validation Error (400) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <EnvelopeVersion>2.0</EnvelopeVersion>
+    <Header>
+        <MessageDetails>
+            <Class>FormSubmission</Class>
+            <Qualifier>error</Qualifier>
+            <TransactionID>6</TransactionID>
+        </MessageDetails>
+    </Header>
+    <GovTalkDetails>
+        <GovTalkErrors>
+            <Error>
+                <RaisedBy>CH</RaisedBy>
+                <Number>400</Number>
+                <Type>fatal</Type>
+                <Text>Schema validation failed: Element 'InvalidElement' is not allowed.</Text>
+                <Location>Body/FormSubmission</Location>
+            </Error>
+        </GovTalkErrors>
+    </GovTalkDetails>
+    <Body/>
+</GovTalkMessage>

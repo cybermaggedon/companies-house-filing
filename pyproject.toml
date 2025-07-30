@@ -1,0 +1,74 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gnucash-ch-filing"
+dynamic = ["version"]
+description = "UK Companies House accounts filing for GnuCash users"
+readme = "README.md"
+requires-python = ">=3.6"
+license = {text = "GPL-3.0-or-later"}
+authors = [
+    {name = "Cybermaggedon", email = "mark@cyberapocalypse.co.uk"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "lxml",
+    "requests"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-mock>=3.0",
+    "pytest-asyncio>=0.21.0",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-mock>=3.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+    "bandit>=1.7.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/cybermaggedon/gnucash-ch-filing"
+Repository = "https://github.com/cybermaggedon/gnucash-ch-filing"
+Download = "https://github.com/cybermaggedon/gnucash-uk-corptax/archive/refs/tags/v0.2.1.tar.gz"
+
+[project.scripts]
+ch-filing = "ch_filing.__main__:main"
+ch-mock-server = "ch_filing.test_server.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ch_filing*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "ch_filing.__version__"}
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = [
+    "--strict-markers",
+    "-v",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "security: marks tests as security-related",
+    "performance: marks tests as performance-related",
+]

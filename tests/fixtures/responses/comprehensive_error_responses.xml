@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Collection of comprehensive error response examples for testing -->
+
+<!-- Authentication Failure (Error 502) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" 
+               SchemaLocation="http://www.govtalk.gov.uk/CM/envelope envelope-v2-0.xsd">
+  <EnvelopeVersion>2.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>HMRC-CH-DEV</Class>
+      <Qualifier>error</Qualifier>
+      <Function>submit</Function>
+      <TransactionID>T000001</TransactionID>
+      <CorrelationID>C000001</CorrelationID>
+      <Transformation>XML</Transformation>
+      <GatewayTest>1</GatewayTest>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>TESTID</SenderID>
+        <Authentication>
+          <Method>MD5</Method>
+          <Value>9c5c9c5c9c5c9c5c9c5c9c5c9c5c9c5c</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <GovTalkErrors>
+      <Error>
+        <RaisedBy>GovTalk</RaisedBy>
+        <Number>502</Number>
+        <Type>fatal</Type>
+        <Text>Authentication failure</Text>
+        <Location>GovTalk/Header/SenderDetails/IDAuthentication</Location>
+      </Error>
+    </GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+    <ErrorResponse xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader">
+      <ErrorDescription>Invalid authentication credentials provided</ErrorDescription>
+    </ErrorResponse>
+  </Body>
+</GovTalkMessage>
+
+<!-- Validation Error (Error 100) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" 
+               SchemaLocation="http://www.govtalk.gov.uk/CM/envelope envelope-v2-0.xsd">
+  <EnvelopeVersion>2.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>HMRC-CH-DEV</Class>
+      <Qualifier>error</Qualifier>
+      <Function>submit</Function>
+      <TransactionID>T000002</TransactionID>
+      <CorrelationID>C000002</CorrelationID>
+      <Transformation>XML</Transformation>
+      <GatewayTest>1</GatewayTest>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>TESTID</SenderID>
+        <Authentication>
+          <Method>MD5</Method>
+          <Value>valid_hash</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <GovTalkErrors>
+      <Error>
+        <RaisedBy>GovTalk</RaisedBy>
+        <Number>100</Number>
+        <Type>fatal</Type>
+        <Text>Request validation error</Text>
+        <Location>Body/CompanyDataRequest/CompanyNumber</Location>
+      </Error>
+    </GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+    <ErrorResponse xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader">
+      <ErrorDescription>Company number must be 8 digits</ErrorDescription>
+    </ErrorResponse>
+  </Body>
+</GovTalkMessage>
+
+<!-- Accounts Corruption Error (Error 9999) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" 
+               SchemaLocation="http://www.govtalk.gov.uk/CM/envelope envelope-v2-0.xsd">
+  <EnvelopeVersion>2.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>HMRC-CH-DEV</Class>
+      <Qualifier>error</Qualifier>
+      <Function>submit</Function>
+      <TransactionID>T000003</TransactionID>
+      <CorrelationID>C000003</CorrelationID>
+      <Transformation>XML</Transformation>
+      <GatewayTest>1</GatewayTest>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>TESTID</SenderID>
+        <Authentication>
+          <Method>MD5</Method>
+          <Value>valid_hash</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <GovTalkErrors>
+      <Error>
+        <RaisedBy>BusinessRule</RaisedBy>
+        <Number>9999</Number>
+        <Type>fatal</Type>
+        <Text>Suspected accounts corruption</Text>
+        <Location>Body/Accounts/Data</Location>
+      </Error>
+    </GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+    <ErrorResponse xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader">
+      <ErrorDescription>The submitted accounts data appears to be corrupted or invalid</ErrorDescription>
+    </ErrorResponse>
+  </Body>
+</GovTalkMessage>
+
+<!-- Company Not Found Error (Error 1001) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" 
+               SchemaLocation="http://www.govtalk.gov.uk/CM/envelope envelope-v2-0.xsd">
+  <EnvelopeVersion>2.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>HMRC-CH-DEV</Class>
+      <Qualifier>error</Qualifier>
+      <Function>submit</Function>
+      <TransactionID>T000004</TransactionID>
+      <CorrelationID>C000004</CorrelationID>
+      <Transformation>XML</Transformation>
+      <GatewayTest>1</GatewayTest>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>TESTID</SenderID>
+        <Authentication>
+          <Method>MD5</Method>
+          <Value>valid_hash</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <GovTalkErrors>
+      <Error>
+        <RaisedBy>BusinessRule</RaisedBy>
+        <Number>1001</Number>
+        <Type>fatal</Type>
+        <Text>Company not found</Text>
+        <Location>Body/CompanyDataRequest/CompanyNumber</Location>
+      </Error>
+    </GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+    <ErrorResponse xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader">
+      <ErrorDescription>No company found with the specified company number</ErrorDescription>
+    </ErrorResponse>
+  </Body>
+</GovTalkMessage>
+
+<!-- Service Unavailable Error (Error 503) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" 
+               SchemaLocation="http://www.govtalk.gov.uk/CM/envelope envelope-v2-0.xsd">
+  <EnvelopeVersion>2.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>HMRC-CH-DEV</Class>
+      <Qualifier>error</Qualifier>
+      <Function>submit</Function>
+      <TransactionID>T000005</TransactionID>
+      <CorrelationID>C000005</CorrelationID>
+      <Transformation>XML</Transformation>
+      <GatewayTest>1</GatewayTest>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>TESTID</SenderID>
+        <Authentication>
+          <Method>MD5</Method>
+          <Value>valid_hash</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <GovTalkErrors>
+      <Error>
+        <RaisedBy>System</RaisedBy>
+        <Number>503</Number>
+        <Type>fatal</Type>
+        <Text>Service temporarily unavailable</Text>
+        <Location>GovTalkService</Location>
+      </Error>
+    </GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+    <ErrorResponse xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader">
+      <ErrorDescription>The service is temporarily unavailable due to maintenance. Please try again later.</ErrorDescription>
+    </ErrorResponse>
+  </Body>
+</GovTalkMessage>
+
+<!-- Schema Validation Error (Error 400) -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" 
+               SchemaLocation="http://www.govtalk.gov.uk/CM/envelope envelope-v2-0.xsd">
+  <EnvelopeVersion>2.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>HMRC-CH-DEV</Class>
+      <Qualifier>error</Qualifier>
+      <Function>submit</Function>
+      <TransactionID>T000006</TransactionID>
+      <CorrelationID>C000006</CorrelationID>
+      <Transformation>XML</Transformation>
+      <GatewayTest>1</GatewayTest>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>TESTID</SenderID>
+        <Authentication>
+          <Method>MD5</Method>
+          <Value>valid_hash</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <GovTalkErrors>
+      <Error>
+        <RaisedBy>Schema</RaisedBy>
+        <Number>400</Number>
+        <Type>fatal</Type>
+        <Text>Schema validation failure</Text>
+        <Location>Body/CompanyDataRequest</Location>
+      </Error>
+    </GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+    <ErrorResponse xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader">
+      <ErrorDescription>The request does not conform to the expected XML schema</ErrorDescription>
+    </ErrorResponse>
+  </Body>
+</GovTalkMessage>
+
+<!-- Multiple Errors Response -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" 
+               SchemaLocation="http://www.govtalk.gov.uk/CM/envelope envelope-v2-0.xsd">
+  <EnvelopeVersion>2.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>HMRC-CH-DEV</Class>
+      <Qualifier>error</Qualifier>
+      <Function>submit</Function>
+      <TransactionID>T000007</TransactionID>
+      <CorrelationID>C000007</CorrelationID>
+      <Transformation>XML</Transformation>
+      <GatewayTest>1</GatewayTest>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>TESTID</SenderID>
+        <Authentication>
+          <Method>MD5</Method>
+          <Value>valid_hash</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <GovTalkErrors>
+      <Error>
+        <RaisedBy>BusinessRule</RaisedBy>
+        <Number>1002</Number>
+        <Type>fatal</Type>
+        <Text>Invalid company authentication code</Text>
+        <Location>Body/CompanyDataRequest/CompanyAuthenticationCode</Location>
+      </Error>
+      <Error>
+        <RaisedBy>BusinessRule</RaisedBy>
+        <Number>1003</Number>
+        <Type>warning</Type>
+        <Text>Company accounts period may be incorrect</Text>
+        <Location>Body/CompanyDataRequest/MadeUpDate</Location>
+      </Error>
+      <Error>
+        <RaisedBy>Validation</RaisedBy>
+        <Number>1004</Number>
+        <Type>fatal</Type>
+        <Text>Required field missing</Text>
+        <Location>Body/CompanyDataRequest/ContactName</Location>
+      </Error>
+    </GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+    <ErrorResponse xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader">
+      <ErrorDescription>Multiple validation errors found in the request</ErrorDescription>
+    </ErrorResponse>
+  </Body>
+</GovTalkMessage>
+
+<!-- Timeout Error -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" 
+               SchemaLocation="http://www.govtalk.gov.uk/CM/envelope envelope-v2-0.xsd">
+  <EnvelopeVersion>2.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>HMRC-CH-DEV</Class>
+      <Qualifier>error</Qualifier>
+      <Function>submit</Function>
+      <TransactionID>T000008</TransactionID>
+      <CorrelationID>C000008</CorrelationID>
+      <Transformation>XML</Transformation>
+      <GatewayTest>1</GatewayTest>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>TESTID</SenderID>
+        <Authentication>
+          <Method>MD5</Method>
+          <Value>valid_hash</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <GovTalkErrors>
+      <Error>
+        <RaisedBy>System</RaisedBy>
+        <Number>504</Number>
+        <Type>fatal</Type>
+        <Text>Gateway timeout</Text>
+        <Location>System</Location>
+      </Error>
+    </GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+    <ErrorResponse xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader">
+      <ErrorDescription>The request timed out while being processed</ErrorDescription>
+    </ErrorResponse>
+  </Body>
+</GovTalkMessage>
+
+<!-- Rate Limit Error -->
+<GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope" 
+               SchemaLocation="http://www.govtalk.gov.uk/CM/envelope envelope-v2-0.xsd">
+  <EnvelopeVersion>2.0</EnvelopeVersion>
+  <Header>
+    <MessageDetails>
+      <Class>HMRC-CH-DEV</Class>
+      <Qualifier>error</Qualifier>
+      <Function>submit</Function>
+      <TransactionID>T000009</TransactionID>
+      <CorrelationID>C000009</CorrelationID>
+      <Transformation>XML</Transformation>
+      <GatewayTest>1</GatewayTest>
+    </MessageDetails>
+    <SenderDetails>
+      <IDAuthentication>
+        <SenderID>TESTID</SenderID>
+        <Authentication>
+          <Method>MD5</Method>
+          <Value>valid_hash</Value>
+        </Authentication>
+      </IDAuthentication>
+    </SenderDetails>
+  </Header>
+  <GovTalkDetails>
+    <GovTalkErrors>
+      <Error>
+        <RaisedBy>System</RaisedBy>
+        <Number>429</Number>
+        <Type>fatal</Type>
+        <Text>Too many requests</Text>
+        <Location>System</Location>
+      </Error>
+    </GovTalkErrors>
+  </GovTalkDetails>
+  <Body>
+    <ErrorResponse xmlns="http://www.govtalk.gov.uk/schemas/govtalk/govtalkheader">
+      <ErrorDescription>Rate limit exceeded. Please reduce the frequency of requests.</ErrorDescription>
+    </ErrorResponse>
+  </Body>
+</GovTalkMessage>

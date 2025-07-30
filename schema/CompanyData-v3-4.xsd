@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://xmlgw.companieshouse.gov.uk" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlgw.companieshouse.gov.uk" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.4" id="CompanyData">
+	<xs:include schemaLocation="baseTypes-v3-5.xsd"/>
+	<xs:include schemaLocation="RegisterBaseTypes-v1-0.xsd"/>
+	<xs:include schemaLocation="PSCBaseTypes-v1-2.xsd"/>
+	<xs:element name="CompanyData">
+		<xs:annotation>
+			<xs:documentation>Company Data as required for Shuttle and form pre-population.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CompanyNumber"/>
+				<xs:element name="CompanyName"/>
+				<xs:element ref="CompanyCategory"/>
+				<xs:element name="Jurisdiction">
+					<xs:annotation>
+						<xs:documentation>The country holding jusridiction over the company</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="EW"/>
+							<xs:enumeration value="SC"/>
+							<xs:enumeration value="WA"/>
+							<xs:enumeration value="NI"/>
+							<xs:enumeration value="EU"/>
+							<xs:enumeration value="UK"/>
+							<xs:enumeration value="EN"/>
+							<xs:enumeration value="OTHER"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="TradingOnMarket" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="DTR5Applies" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="PSCExemptAsTradingOnRegulatedMarket" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="PSCExemptAsSharesAdmittedOnMarket" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="PSCExemptAsTradingOnUKRegulatedMarket" type="xs:boolean" minOccurs="0"/>
+				<xs:element ref="MadeUpDate"/>
+				<xs:element ref="NextDueDate"/>
+				<xs:element name="RegisteredOfficeAddress" type="UKAddressType"/>
+				<xs:element name="SailAddress" type="UKAddressType" minOccurs="0"/>
+				<xs:element name="SailRecords" minOccurs="0" maxOccurs="16">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="RecordType"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="SICCodes" maxOccurs="4"/>
+				<xs:element name="Officers">
+					<xs:complexType>
+						<xs:choice maxOccurs="unbounded">
+							<xs:element name="Director">
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="CompanyDataDirectorType">
+											<xs:sequence>
+												<xs:element ref="AppointmentDate"/>
+												<xs:element ref="ResignationDate" minOccurs="0"/>
+											</xs:sequence>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Secretary">
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="CompanyDataSecretaryType">
+											<xs:sequence>
+												<xs:element ref="AppointmentDate"/>
+												<xs:element ref="ResignationDate" minOccurs="0"/>
+											</xs:sequence>
+										</xs:extension>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Member" type="CompanyDataMemberType"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PSCs" minOccurs="0">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="CompanyStatement" type="CompanyLevelStatementType">
+								<xs:annotation>
+									<xs:documentation>These statements apply when the company/LLP does not have a PSC or does not know who they are</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="PSC" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:choice>
+										<xs:element name="PSCStatementNotification" type="PSCLevelStatementType"/>
+										<xs:element name="PSCLinkedStatementNotification" type="PSCLinkedStatementType"/>
+										<xs:element name="PSCNotification">
+											<xs:complexType>
+												<xs:complexContent>
+													<xs:extension base="PSCNotificationReturnType">
+														<xs:sequence>
+															<xs:element ref="NotificationDate"/>
+															<xs:element ref="CessationDate" minOccurs="0"/>
+														</xs:sequence>
+													</xs:extension>
+												</xs:complexContent>
+											</xs:complexType>
+										</xs:element>
+										<xs:element ref="SuperSecureIndividual"/>
+									</xs:choice>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="StatementOfCapital" type="StatementOfCapitalType" minOccurs="0">
+					<xs:annotation>
+						<xs:appinfo>NumShares and ShareValue == MANDATORY</xs:appinfo>
+						<xs:documentation>One Total per Currency</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Shareholdings" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ShareClass"/>
+							<xs:element name="NumberHeld">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:maxInclusive value="999999999999999.999999"/>
+										<xs:minInclusive value="0"/>
+										<xs:fractionDigits value="6"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Shareholders" maxOccurs="10">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Name">
+											<xs:complexType>
+												<xs:choice>
+													<xs:sequence>
+														<xs:element ref="Surname"/>
+														<xs:element ref="Forename" minOccurs="0" maxOccurs="unbounded"/>
+													</xs:sequence>
+													<xs:element name="AmalgamatedName" type="nonEmptyString"/>
+												</xs:choice>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Address" type="AddressBaseType" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Registers" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="HeldOnPublicRecord" maxOccurs="7">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="RegisterType" type="RegisterTypeType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CompanyDataRequest">
+		<xs:annotation>
+			<xs:documentation>Company Data Request</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CompanyNumber"/>
+				<xs:element name="CompanyType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>The Compnay Type Prefix</xs:documentation>
+					</xs:annotation>
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="EW"/>
+							<xs:enumeration value="SC"/>
+							<xs:enumeration value="NI"/>
+							<xs:enumeration value="R"/>
+							<xs:enumeration value="OC"/>
+							<xs:enumeration value="SO"/>
+							<xs:enumeration value="NC"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element ref="CompanyAuthenticationCode"/>
+				<xs:element ref="MadeUpDate"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="CompanyDataDirectorType">
+		<xs:annotation>
+			<xs:documentation>A Company Data Director</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="Person">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="DirectorPersonReturnType">
+							<xs:sequence>
+								<xs:element name="ResidentialAddress" minOccurs="0">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="CompanyDataResidentialAddressType"/>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Corporate" type="CorporateOfficerType"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CompanyDataMemberType">
+		<xs:annotation>
+			<xs:documentation>A Company Data LLP Member</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="Person">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="PersonReturnType">
+								<xs:sequence>
+									<xs:element name="ServiceAddress" type="ServiceAddressType"/>
+									<xs:element ref="DOB"/>
+									<xs:element ref="CountryOfResidence"/>
+									<xs:element name="ResidentialAddress" minOccurs="0">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="CompanyDataResidentialAddressType"/>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Corporate" type="CorporateOfficerType"/>
+			</xs:choice>
+			<xs:element name="DesignatedInd" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>Indicates if the member is designated</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CompanyDataResidentialAddressType">
+		<xs:sequence>
+			<xs:element name="SameAsServiceAddress" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The address is the same as Service address</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:minLength value="4"/>
+						<xs:enumeration value="true"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="Address" type="AddressBaseType"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

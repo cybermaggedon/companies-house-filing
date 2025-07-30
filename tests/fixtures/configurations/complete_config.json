@@ -1,0 +1,16 @@
+{
+  "presenter-id": "COMPLETE_PRESENTER_123",
+  "authentication": "COMPLETE_AUTH_TOKEN_XYZ789",
+  "company-number": "87654321",
+  "company-name": "COMPLETE TEST COMPANY LIMITED",
+  "company-authentication-code": "COMP9876",
+  "company-type": "EW",
+  "contact-name": "Complete Test Contact",
+  "contact-number": "07900 123456",
+  "email": "complete@example.com",
+  "made-up-date": "2023-12-31",
+  "date-signed": "2024-01-15",
+  "date": "2024-01-20",
+  "package-reference": "COMP001",
+  "url": "http://localhost:8080/v1-0/xmlgw/Gateway"
+}

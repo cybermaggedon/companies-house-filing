@@ -1,0 +1,7 @@
+{
+  "presenter-id": "MINIMAL_PRESENTER",
+  "authentication": "MINIMAL_AUTH_TOKEN",
+  "company-number": "12345678",
+  "made-up-date": "2023-12-31",
+  "url": "http://localhost:8080/v1-0/xmlgw/Gateway"
+}

@@ -1,0 +1,71 @@
+name: Test pull request
+
+on:
+  pull_request:
+    branches: [ master, main ]
+  push:
+    branches: [ master, main ]
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.12', '3.13']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt-dev
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[test]
+
+      - name: Run unit tests
+        run: |
+          pytest tests/unit/ -v --tb=short --junit-xml=junit-unit-${{ matrix.python-version }}.xml
+
+      - name: Run integration tests
+        run: |
+          pytest tests/integration/ -v --tb=short --junit-xml=junit-integration-${{ matrix.python-version }}.xml
+
+      - name: Run contract tests
+        run: |
+          pytest tests/contract/ -v --tb=short --junit-xml=junit-contract-${{ matrix.python-version }}.xml
+
+      - name: Run e2e tests
+        run: |
+          pytest tests/e2e/ -v --tb=short --junit-xml=junit-e2e-${{ matrix.python-version }}.xml
+
+      - name: Test package installation
+        run: |
+          python -c "import ch_filing; print('Package imported successfully on Python ${{ matrix.python-version }}')"
+          ch-filing --help || echo "CLI help command completed"
+          python -m ch_filing --help || echo "Module help command completed"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ matrix.python-version }}
+          path: junit-*.xml
+
