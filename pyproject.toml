@@ -29,6 +29,7 @@ Download = "https://github.com/cybermaggedon/gnucash-uk-corptax/archive/refs/tag
 
 [project.scripts]
 ch-filing = "ch_filing.__main__:main"
+ch-test-server = "ch_filing.test_server.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
