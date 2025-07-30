@@ -367,6 +367,9 @@ class TestErrorHandlingIntegration:
         assert tx_id_1 == expected_tx_id_1
         
         # Simulate an error scenario
+        # Note: Envelope.create() will consume another transaction ID
+        current_tx_id_before_envelope = fresh_state.get_cur_tx_id()
+        
         with patch('ch_filing.client.requests.post') as mock_post:
             import requests
             mock_post.side_effect = requests.exceptions.ConnectionError("Connection failed")
@@ -377,9 +380,13 @@ class TestErrorHandlingIntegration:
             with pytest.raises(RequestFailure):
                 fresh_client.call(fresh_state, envelope)
         
-        # Transaction ID should still increment normally after error
+        # Transaction ID should increment normally after error
+        # (Envelope.create already consumed one TX ID)
+        tx_id_after_envelope = fresh_state.get_cur_tx_id()
+        assert tx_id_after_envelope == current_tx_id_before_envelope + 1
+        
         tx_id_2 = fresh_client.get_next_tx_id()
-        expected_tx_id_2 = tx_id_1 + 1
+        expected_tx_id_2 = tx_id_after_envelope + 1
         assert tx_id_2 == expected_tx_id_2
     
     def test_state_persistence_during_error_conditions(self, test_state):
