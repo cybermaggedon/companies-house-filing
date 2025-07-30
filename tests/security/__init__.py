@@ -1,0 +1,1 @@
+# Security tests for GnuCash Companies House filing system
