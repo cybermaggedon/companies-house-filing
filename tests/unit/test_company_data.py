@@ -109,7 +109,10 @@ class TestCompanyData:
             state = State(str(config_file), str(state_file))
             
             request = CompanyData.create_request(state)
-            assert str(request.CompanyNumber) == company_number
+            
+            # Check via XML serialization to preserve exact formatting
+            xml_string = etree.tostring(request, encoding='unicode')
+            assert f"<CompanyNumber>{company_number}</CompanyNumber>" in xml_string
     
     def test_create_request_different_auth_codes(self, tmp_path):
         """Test request creation with different authentication codes"""
@@ -201,8 +204,12 @@ class TestCompanyData:
         """Test that XML elements appear in the expected order"""
         request = CompanyData.create_request(test_state)
         
-        # Get child elements in order
-        children = list(request)
+        # Parse XML to get proper child order
+        xml_string = etree.tostring(request, encoding='unicode')
+        doc = etree.fromstring(xml_string.encode('utf-8'))
+        
+        # Get direct children of CompanyDataRequest
+        children = list(doc)
         child_tags = [child.tag.split('}')[-1] for child in children]  # Remove namespace
         
         # Check expected order based on XSD
