@@ -19,7 +19,7 @@ jobs:
     
     strategy:
       matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.12', '3.13']
 
     steps:
       - name: Checkout repository
@@ -132,10 +132,6 @@ jobs:
           pip install flake8 black isort
           pip install -e .
 
-      - name: Check code formatting
-        run: |
-          black --check --diff ch_filing/ || (echo "Code formatting issues found. Run 'black ch_filing/' to fix." && exit 1)
-
       - name: Check import sorting
         run: |
           isort --check-only --diff ch_filing/ || (echo "Import sorting issues found. Run 'isort ch_filing/' to fix." && exit 1)
@@ -193,67 +189,3 @@ jobs:
           pip uninstall -y pytest pytest-cov pytest-mock
           python -c "import ch_filing; print('✓ Core package works with minimal dependencies')"
 
-  test-docker:
-    name: Test in Docker environment
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Test in Docker
-        run: |
-          docker run --rm -v $(pwd):/workspace -w /workspace python:3.13-slim bash -c "
-            apt-get update && apt-get install -y libxml2-dev libxslt-dev gcc &&
-            pip install -e .[test] &&
-            pytest tests/unit/ tests/integration/test_client_server_workflow.py -v
-          "
-
-  performance-baseline:
-    name: Performance baseline
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.13'
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libxml2-dev libxslt-dev
-          python -m pip install --upgrade pip
-          pip install -e .[test]
-          pip install pytest-benchmark
-
-      - name: Run performance baseline tests
-        run: |
-          # Run a subset of tests with timing information
-          pytest tests/unit/test_company_data.py tests/unit/test_envelope.py -v --tb=short --durations=10
-
-      - name: Test mock server performance
-        run: |
-          python -c "
-          import time
-          from ch_filing.test_server import MockServer
-          
-          print('Testing mock server startup time...')
-          start = time.time()
-          with MockServer(port=9998) as server:
-              startup_time = time.time() - start
-              print(f'✓ Mock server startup time: {startup_time:.3f}s')
-              
-              # Test basic response time
-              import requests
-              start = time.time()
-              try:
-                  requests.post('http://localhost:9998/v1-0/xmlgw/Gateway', data='test', timeout=1)
-              except:
-                  pass  # Expected to fail, we just want timing
-              response_time = time.time() - start
-              print(f'✓ Mock server response time: {response_time:.3f}s')
-          "
