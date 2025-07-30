@@ -1,11 +1,11 @@
 
-# `gnucash-ch-filing`
+# `companies-house-filing`
 
-[![CI](https://github.com/cybermaggedon/gnucash-ch-filing/workflows/Continuous%20Integration/badge.svg)](https://github.com/cybermaggedon/gnucash-ch-filing/actions/workflows/ci.yaml)
-[![Test PR](https://github.com/cybermaggedon/gnucash-ch-filing/workflows/Test%20pull%20request/badge.svg)](https://github.com/cybermaggedon/gnucash-ch-filing/actions/workflows/pull-request.yaml)
-[![PyPI version](https://badge.fury.io/py/gnucash-ch-filing.svg)](https://badge.fury.io/py/gnucash-ch-filing)
-[![Python versions](https://img.shields.io/pypi/pyversions/gnucash-ch-filing.svg)](https://pypi.org/project/gnucash-ch-filing/)
-[![License](https://img.shields.io/github/license/cybermaggedon/gnucash-ch-filing.svg)](https://github.com/cybermaggedon/gnucash-ch-filing/blob/master/LICENSE)
+[![CI](https://github.com/cybermaggedon/companies-house-filing/workflows/Continuous%20Integration/badge.svg)](https://github.com/cybermaggedon/companies-house-filing/actions/workflows/ci.yaml)
+[![Test PR](https://github.com/cybermaggedon/companies-house-filing/workflows/Test%20pull%20request/badge.svg)](https://github.com/cybermaggedon/companies-house-filing/actions/workflows/pull-request.yaml)
+[![PyPI version](https://badge.fury.io/py/companies-house-filing.svg)](https://badge.fury.io/py/companies-house-filing)
+[![Python versions](https://img.shields.io/pypi/pyversions/companies-house-filing.svg)](https://pypi.org/project/companies-house-filing/)
+[![License](https://img.shields.io/github/license/cybermaggedon/companies-house-filing.svg)](https://github.com/cybermaggedon/companies-house-filing/blob/master/LICENSE)
 
 ## Introduction
 
@@ -16,7 +16,7 @@ This utility is designed to take a UK company accounts file formatted using
 [`gnucash-ixbrl`](https://github.com/cybermaggedon/gnucash-ixbrl) and
 submits in accordance with the Software Filing API.
 
-`gnucash-ch-filing` presently understands a small subset of the accounts
+`companies-house-filing` presently understands a small subset of the accounts
 management process, and may be useful for a small business with simple
 accounting affairs. It really is no use to a complex business.
 
@@ -38,7 +38,7 @@ Companies House documentation:
 ## Installing
 
 ```
-pip3 install git+https://github.com/cybermaggedon/gnucash-ch-filing
+pip3 install git+https://github.com/cybermaggedon/companies-house-filing
 ```
 
 ## Testing
@@ -107,7 +107,7 @@ purposes.  Really, you should check with a qualified accountant.
 
 ## Licence
 
-Copyright (C) 2021, Cyberapocalypse Limited
+Copyright (C) 2025, Cyberapocalypse Limited
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
