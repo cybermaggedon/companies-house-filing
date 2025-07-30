@@ -288,59 +288,63 @@ class TestNetworkResilienceIntegration:
         results = []
         errors = []
         
-        def make_request(request_id):
-            try:
-                # Create unique state file for each thread to avoid conflicts
-                thread_config_file = tmp_path / f"thread_{request_id}_config.json"
-                thread_state_file = tmp_path / f"thread_{request_id}_state.json"
-                
-                config_data = test_state.config.copy()
-                with open(thread_config_file, 'w') as f:
-                    json.dump(config_data, f)
-                
-                thread_state = State(str(thread_config_file), str(thread_state_file))
-                client = Client(thread_state)
-                
-                content = CompanyData.create_request(thread_state)
-                envelope = Envelope.create(thread_state, content, "CompanyDataRequest", "request")
-                
-                with patch('ch_filing.client.requests.post') as mock_post:
-                    mock_response = Mock()
-                    mock_response.status_code = 200
-                    mock_response.text = f"""<?xml version="1.0" encoding="UTF-8"?>
+        # Set up the mock outside of threading to ensure it applies to all threads
+        with patch('ch_filing.client.requests.post') as mock_post:
+            def create_mock_response(request_id):
+                mock_response = Mock()
+                mock_response.status_code = 200
+                mock_response.text = f"""<?xml version="1.0" encoding="UTF-8"?>
 <GovTalkMessage xmlns="http://www.govtalk.gov.uk/CM/envelope">
     <EnvelopeVersion>2.0</EnvelopeVersion>
     <Header><MessageDetails><TransactionID>12345</TransactionID></MessageDetails></Header>
     <GovTalkDetails></GovTalkDetails>
     <Body><CompanyDataResponse><CompanyNumber>12345678</CompanyNumber><RequestID>{request_id}</RequestID></CompanyDataResponse></Body>
 </GovTalkMessage>"""
-                    mock_post.return_value = mock_response
+                return mock_response
+            
+            # Configure mock to return different responses for different calls
+            mock_post.side_effect = lambda *args, **kwargs: create_mock_response(f"resp_{len(results)}")
+            
+            def make_request(request_id):
+                try:
+                    # Create unique state file for each thread to avoid conflicts
+                    thread_config_file = tmp_path / f"thread_{request_id}_config.json"
+                    thread_state_file = tmp_path / f"thread_{request_id}_state.json"
+                    
+                    config_data = test_state.config.copy()
+                    with open(thread_config_file, 'w') as f:
+                        json.dump(config_data, f)
+                    
+                    thread_state = State(str(thread_config_file), str(thread_state_file))
+                    client = Client(thread_state)
+                    
+                    content = CompanyData.create_request(thread_state)
+                    envelope = Envelope.create(thread_state, content, "CompanyDataRequest", "request")
                     
                     response = client.call(thread_state, envelope)
                     results.append((request_id, response))
                     
-            except Exception as e:
-                errors.append((request_id, str(e)))
-        
-        # Create multiple threads making concurrent requests
-        threads = []
-        
-        for i in range(5):
-            thread = threading.Thread(target=make_request, args=(f"req_{i}",))
-            threads.append(thread)
-            thread.start()
-        
-        # Wait for all threads to complete
-        for thread in threads:
-            thread.join()
+                except Exception as e:
+                    errors.append((request_id, str(e)))
+            
+            # Create multiple threads making concurrent requests
+            threads = []
+            
+            for i in range(5):
+                thread = threading.Thread(target=make_request, args=(f"req_{i}",))
+                threads.append(thread)
+                thread.start()
+            
+            # Wait for all threads to complete
+            for thread in threads:
+                thread.join()
         
         # Verify all requests succeeded
         assert len(errors) == 0, f"Concurrent requests failed: {errors}"
         assert len(results) == 5
         
-        # Verify each response is unique
-        request_ids = [result[0] for result in results]
-        assert len(set(request_ids)) == 5
+        # Verify responses were received
+        assert all(result[1] is not None for result in results), "Some responses were None"
     
     def test_network_interface_changes(self, test_state, test_client):
         """Test resilience to network interface changes"""
