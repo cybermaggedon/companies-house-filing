@@ -10,7 +10,7 @@ class State:
     def load_state(self):
         # FIXME: Check it exists!
         try:
-            return json.loads(open("state.json").read())
+            return json.loads(open(self.state_file).read())
         except:
             return {
                 "transaction-id": 0,
