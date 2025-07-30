@@ -2,7 +2,7 @@
 from lxml import objectify
 
 cd_ns = "http://xmlgw.companieshouse.gov.uk"
-cd_sl = "http://xmlgw.companieshouse.gov.uk/v2-1/schema/CompanyData-v3-3.xsd"
+cd_sl = "http://xmlgw.companieshouse.gov.uk/v2-1/schema/CompanyData-v3-4.xsd"
 
 xsi_ns = "http://www.w3.org/2001/XMLSchema-instance"
 

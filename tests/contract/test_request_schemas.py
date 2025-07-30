@@ -64,7 +64,7 @@ class TestRequestSchemas:
     
     def test_govtalk_envelope_schema(self, test_state, schema_dir):
         """Test that GovTalk envelope validates against GovTalk schema"""
-        schema_path = schema_dir / "Egov_ch-v2-0.xsd"
+        schema_path = schema_dir / "schema" / "Egov_ch-v2-0.xsd"
         schema = self.load_schema(schema_path)
         
         # Create a simple content element
@@ -82,7 +82,7 @@ class TestRequestSchemas:
     
     def test_company_data_request_schema(self, test_state, schema_dir):
         """Test that CompanyDataRequest validates against CompanyData schema"""
-        schema_path = schema_dir / "CompanyData-v3-4.xsd"
+        schema_path = schema_dir / "schema" / "CompanyData-v3-4.xsd"
         
         # Skip if schema file doesn't exist or has dependency issues
         if not schema_path.exists():
