@@ -45,6 +45,23 @@ class TestData:
                     "country": "United Kingdom"
                 },
                 "sic_codes": ["62012", "62020"]
+            },
+            "12345678": {
+                "name": "TEST COMPANY LIMITED",
+                "category": "Private Limited Company",
+                "jurisdiction": "England/Wales",
+                "trading": False,
+                "made_up_date": "2023-12-31",
+                "next_due_date": "2024-09-30",
+                "address": {
+                    "premise": "123",
+                    "street": "Test Street",
+                    "thoroughfare": "Test Area",
+                    "post_town": "Test Town",
+                    "postcode": "TE5 7ST",
+                    "country": "United Kingdom"
+                },
+                "sic_codes": ["62012", "62020"]
             }
         }
         
