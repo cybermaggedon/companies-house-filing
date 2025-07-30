@@ -64,3 +64,8 @@ addopts = [
     "--strict-markers",
     "-v",
 ]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "security: marks tests as security-related",
+    "performance: marks tests as performance-related",
+]

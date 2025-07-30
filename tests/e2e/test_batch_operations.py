@@ -2,6 +2,7 @@ import pytest
 import json
 import time
 import threading
+import socket
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
@@ -30,6 +31,14 @@ class BatchOperationResult:
 
 class TestBatchOperations:
     """Extended end-to-end tests for batch operations"""
+    
+    def _find_free_port(self):
+        """Find a free port for mock server"""
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.bind(('', 0))
+            s.listen(1)
+            port = s.getsockname()[1]
+        return port
     
     @pytest.fixture
     def batch_state_template(self, tmp_path):
@@ -87,7 +96,10 @@ class TestBatchOperations:
         config = config_template.copy()
         config["company-number"] = str(int(config["company-number"]) + hash(identifier) % 1000000).zfill(8)
         config["company-name"] = f"BATCH COMPANY {identifier} LIMITED"
-        config["package-reference"] = f"BATCH{identifier:03d}"
+        
+        # Extract numeric part from identifier for package reference
+        numeric_id = abs(hash(identifier)) % 1000
+        config["package-reference"] = f"BATCH{numeric_id:03d}"
         
         with open(config_file, 'w') as f:
             json.dump(config, f)

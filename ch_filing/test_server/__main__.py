@@ -3,7 +3,7 @@
 import argparse
 import signal
 import sys
-from .server import TestServer
+from .server import MockServer as TestServer
 
 def main():
     parser = argparse.ArgumentParser(

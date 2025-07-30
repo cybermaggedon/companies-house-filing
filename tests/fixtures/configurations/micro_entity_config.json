@@ -1,0 +1,16 @@
+{
+  "presenter-id": "MICRO_PRESENTER_456",
+  "authentication": "MICRO_AUTH_TOKEN_ABC123",
+  "company-number": "11223344",
+  "company-name": "MICRO ENTITY TEST LIMITED",
+  "company-authentication-code": "MICRO123",
+  "company-type": "EW",
+  "contact-name": "Micro Entity Contact",
+  "contact-number": "07900 112233",
+  "email": "micro@example.com",
+  "made-up-date": "2023-12-31",
+  "date-signed": "2024-01-15",
+  "date": "2024-01-20",
+  "package-reference": "MICRO001",
+  "url": "http://localhost:8080/v1-0/xmlgw/Gateway"
+}

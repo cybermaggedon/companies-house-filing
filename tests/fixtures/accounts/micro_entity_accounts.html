@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ix="http://www.xbrl.org/2013/inlineXBRL"
+      xmlns:uk-bus="http://xbrl.frc.org.uk/cd/2021-01-01/business"
+      xmlns:uk-core="http://xbrl.frc.org.uk/fr/2021-01-01/core">
+<head>
+    <title>Micro Entity Test Company - Annual Accounts</title>
+    <ix:header>
+        <ix:hidden>
+            <ix:nonNumeric contextRef="entity" name="uk-bus:EntityCurrentLegalName">MICRO ENTITY TEST LIMITED</ix:nonNumeric>
+            <ix:nonNumeric contextRef="entity" name="uk-bus:CompaniesHouseRegisteredNumber">11223344</ix:nonNumeric>
+            <ix:nonNumeric contextRef="entity" name="uk-bus:EntityDormantCompanyIndicator">false</ix:nonNumeric>
+            <ix:nonNumeric contextRef="entity" name="uk-bus:EntityTradingStatus">true</ix:nonNumeric>
+            <ix:nonNumeric contextRef="period" name="uk-bus:BalanceSheetDate">2023-12-31</ix:nonNumeric>
+            <ix:nonNumeric contextRef="period" name="uk-bus:StartDateForPeriodCoveredByReport">2023-01-01</ix:nonNumeric>
+            <ix:nonNumeric contextRef="period" name="uk-bus:EndDateForPeriodCoveredByReport">2023-12-31</ix:nonNumeric>
+        </ix:hidden>
+        <ix:references>
+            <ix:relationship arcrole="http://www.xbrl.org/2003/arcrole/concept-reference"
+                           fromRef="uk-core:Turnover"
+                           toRef="Companies Act 2006 Schedule 1"/>
+        </ix:references>
+    </ix:header>
+</head>
+<body>
+    <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
+        <h1>MICRO ENTITY TEST LIMITED</h1>
+        <p><strong>Company Registration Number:</strong> <ix:nonNumeric contextRef="entity" name="uk-bus:CompaniesHouseRegisteredNumber">11223344</ix:nonNumeric></p>
+        
+        <h2>Micro-entity Accounts for the year ended 31 December 2023</h2>
+        
+        <div style="margin: 20px 0;">
+            <h3>Profit and Loss Account</h3>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #000;">
+                <tr style="background-color: #f0f0f0;">
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold;">Item</td>
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold; text-align: right;">2023 (£)</td>
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold; text-align: right;">2022 (£)</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Turnover</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:Turnover" unitRef="GBP" decimals="0">85000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:Turnover" unitRef="GBP" decimals="0">78000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Cost of sales</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:CostOfSales" unitRef="GBP" decimals="0" sign="-">-45000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:CostOfSales" unitRef="GBP" decimals="0" sign="-">-42000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Gross profit</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:GrossProfit" unitRef="GBP" decimals="0">40000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:GrossProfit" unitRef="GBP" decimals="0">36000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Administrative expenses</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:AdministrativeExpenses" unitRef="GBP" decimals="0" sign="-">-25000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:AdministrativeExpenses" unitRef="GBP" decimals="0" sign="-">-23000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <td style="border: 1px solid #000; padding: 8px;">Profit for the financial year</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:ProfitLoss" unitRef="GBP" decimals="0">15000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:ProfitLoss" unitRef="GBP" decimals="0">13000</ix:nonFraction>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <h3>Balance Sheet as at 31 December 2023</h3>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #000;">
+                <tr style="background-color: #f0f0f0;">
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold;">Item</td>
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold; text-align: right;">2023 (£)</td>
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold; text-align: right;">2022 (£)</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold;" colspan="3">Current assets</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; padding-left: 20px;">Debtors</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:DebtorsAmountFallingDueWithinOneYear" unitRef="GBP" decimals="0">12000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:DebtorsAmountFallingDueWithinOneYear" unitRef="GBP" decimals="0">10000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; padding-left: 20px;">Cash at bank and in hand</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:CashBankInHand" unitRef="GBP" decimals="0">8000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:CashBankInHand" unitRef="GBP" decimals="0">5000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <td style="border: 1px solid #000; padding: 8px;">Total current assets</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:TotalCurrentAssets" unitRef="GBP" decimals="0">20000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:TotalCurrentAssets" unitRef="GBP" decimals="0">15000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold;" colspan="3">Creditors: amounts falling due within one year</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; padding-left: 20px;">Trade creditors</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:TradeCreditorsAmountFallingDueWithinOneYear" unitRef="GBP" decimals="0" sign="-">-3000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:TradeCreditorsAmountFallingDueWithinOneYear" unitRef="GBP" decimals="0" sign="-">-2000</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px; padding-left: 20px;">Accruals and deferred income</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:AccrualsDeferred" unitRef="GBP" decimals="0" sign="-">-2000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:AccrualsDeferred" unitRef="GBP" decimals="0" sign="-">-1500</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <td style="border: 1px solid #000; padding: 8px;">Net current assets</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:NetCurrentAssets" unitRef="GBP" decimals="0">15000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:NetCurrentAssets" unitRef="GBP" decimals="0">11500</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <td style="border: 1px solid #000; padding: 8px;">Total net assets</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:TotalNetAssets" unitRef="GBP" decimals="0">15000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:TotalNetAssets" unitRef="GBP" decimals="0">11500</ix:nonFraction>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="margin: 20px 0;">
+            <h3>Capital and Reserves</h3>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid #000;">
+                <tr style="background-color: #f0f0f0;">
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold;">Item</td>
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold; text-align: right;">2023 (£)</td>
+                    <td style="border: 1px solid #000; padding: 8px; font-weight: bold; text-align: right;">2022 (£)</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Called up share capital</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:CalledUpShareCapital" unitRef="GBP" decimals="0">100</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:CalledUpShareCapital" unitRef="GBP" decimals="0">100</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #000; padding: 8px;">Profit and loss account</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:ProfitLossAccountReserve" unitRef="GBP" decimals="0">14900</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:ProfitLossAccountReserve" unitRef="GBP" decimals="0">11400</ix:nonFraction>
+                    </td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <td style="border: 1px solid #000; padding: 8px;">Total shareholders' funds</td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period" name="uk-core:TotalShareholdersFunds" unitRef="GBP" decimals="0">15000</ix:nonFraction>
+                    </td>
+                    <td style="border: 1px solid #000; padding: 8px; text-align: right;">
+                        <ix:nonFraction contextRef="period-previous" name="uk-core:TotalShareholdersFunds" unitRef="GBP" decimals="0">11500</ix:nonFraction>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div style="margin: 30px 0;">
+            <h3>Notes to the Accounts</h3>
+            <p><strong>1. Accounting policies</strong></p>
+            <p>The accounts have been prepared under the historical cost convention and in accordance with applicable accounting standards and the Companies Act 2006.</p>
+            
+            <p><strong>2. Company information</strong></p>
+            <p>The company is a private limited company incorporated in England and Wales. The company's principal activity is micro-entity test operations.</p>
+        </div>
+
+        <div style="margin: 30px 0; border-top: 1px solid #ccc; padding-top: 20px;">
+            <p><strong>Director's statement:</strong></p>
+            <p>The director acknowledges his responsibilities for complying with the requirements of the Companies Act 2006 with respect to accounting records and the preparation of accounts.</p>
+            <p>These accounts have been prepared in accordance with the provisions applicable to companies subject to the micro-entity reporting regime.</p>
+            
+            <p style="margin-top: 30px;">
+                <strong>Approved by the board:</strong><br/>
+                Micro Entity Contact<br/>
+                Director<br/>
+                Date: 15 January 2024
+            </p>
+        </div>
+    </div>
+
+    <!-- Hidden XBRL contexts and units -->
+    <ix:hidden>
+        <xbrli:xbrl xmlns:xbrli="http://www.xbrl.org/2003/instance">
+            <xbrli:context id="entity">
+                <xbrli:entity>
+                    <xbrli:identifier scheme="http://www.companieshouse.gov.uk/">11223344</xbrli:identifier>
+                </xbrli:entity>
+                <xbrli:period>
+                    <xbrli:instant>2023-12-31</xbrli:instant>
+                </xbrli:period>
+            </xbrli:context>
+            <xbrli:context id="period">
+                <xbrli:entity>
+                    <xbrli:identifier scheme="http://www.companieshouse.gov.uk/">11223344</xbrli:identifier>
+                </xbrli:entity>
+                <xbrli:period>
+                    <xbrli:startDate>2023-01-01</xbrli:startDate>
+                    <xbrli:endDate>2023-12-31</xbrli:endDate>
+                </xbrli:period>
+            </xbrli:context>
+            <xbrli:context id="period-previous">
+                <xbrli:entity>
+                    <xbrli:identifier scheme="http://www.companieshouse.gov.uk/">11223344</xbrli:identifier>
+                </xbrli:entity>
+                <xbrli:period>
+                    <xbrli:startDate>2022-01-01</xbrli:startDate>
+                    <xbrli:endDate>2022-12-31</xbrli:endDate>
+                </xbrli:period>
+            </xbrli:context>
+            <xbrli:unit id="GBP">
+                <xbrli:measure>iso4217:GBP</xbrli:measure>
+            </xbrli:unit>
+        </xbrli:xbrl>
+    </ix:hidden>
+</body>
+</html>
