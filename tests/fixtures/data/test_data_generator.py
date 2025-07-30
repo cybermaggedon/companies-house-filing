@@ -20,7 +20,7 @@ import hashlib
 import base64
 
 
-class TestDataGenerator:
+class DataGenerator:
     """Generate comprehensive test data for the filing system"""
     
     def __init__(self, output_dir: Optional[Path] = None):
@@ -534,7 +534,7 @@ class TestDataGenerator:
 
 if __name__ == "__main__":
     # Example usage and test data generation
-    generator = TestDataGenerator()
+    generator = DataGenerator()
     
     # Generate various test configurations
     configs = {

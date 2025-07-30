@@ -21,7 +21,7 @@ from typing import Dict, List
 
 # Add the parent directory to the path to import test_data_generator
 sys.path.append(str(Path(__file__).parent.parent / "data"))
-from test_data_generator import TestDataGenerator
+from test_data_generator import DataGenerator
 
 
 def generate_company_scenarios() -> List[Dict]:
@@ -283,7 +283,7 @@ def generate_performance_scenarios() -> List[Dict]:
 
 def generate_test_suite(output_dir: Path, scenario_count: int = None):
     """Generate the complete test suite"""
-    generator = TestDataGenerator(output_dir)
+    generator = DataGenerator(output_dir)
     
     # Create directory structure
     (output_dir / "configs").mkdir(exist_ok=True, parents=True)
