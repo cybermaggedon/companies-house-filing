@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gnucash-ch-filing"
+version = "0.2.1"
+description = "UK Companies House accounts filing for GnuCash users"
+readme = "README.md"
+requires-python = ">=3.6"
+license = {text = "GPL-3.0-or-later"}
+authors = [
+    {name = "Cybermaggedon", email = "mark@cyberapocalypse.co.uk"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "lxml",
+    "requests"
+]
+
+[project.urls]
+Homepage = "https://github.com/cybermaggedon/gnucash-ch-filing"
+Repository = "https://github.com/cybermaggedon/gnucash-ch-filing"
+Download = "https://github.com/cybermaggedon/gnucash-uk-corptax/archive/refs/tags/v0.2.1.tar.gz"
+
+[project.scripts]
+ch-filing = "ch_filing.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ch_filing*"]
