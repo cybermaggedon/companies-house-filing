@@ -77,8 +77,12 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
     def _handle_company_data(self, root):
         """Handle CompanyDataRequest"""
         try:
-            company_number = str(root.Body.CompanyDataRequest.CompanyNumber)
-            auth_code = str(root.Body.CompanyDataRequest.CompanyAuthenticationCode)
+            # The Body contains the CompanyDataRequest with its own namespace
+            body = root.Body
+            # Get the first child element regardless of namespace
+            cdr = body.getchildren()[0]
+            company_number = str(cdr.CompanyNumber)
+            auth_code = str(cdr.CompanyAuthenticationCode)
             
             # Validate company auth code
             if hasattr(self, 'config') and auth_code != self.config.company_auth_code:
@@ -111,11 +115,14 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
     def _handle_accounts_submission(self, root):
         """Handle Accounts submission"""
         try:
-            submission_id = str(root.Body.FormSubmission.FormHeader.SubmissionNumber)
-            company_number = str(root.Body.FormSubmission.FormHeader.CompanyNumber)
+            # Get the FormSubmission element regardless of namespace
+            body = root.Body
+            form_sub = body.getchildren()[0]
+            submission_id = str(form_sub.FormHeader.SubmissionNumber)
+            company_number = str(form_sub.FormHeader.CompanyNumber)
             
             # Extract the accounts data
-            doc_data = str(root.Body.FormSubmission.Document.Data)
+            doc_data = str(form_sub.Document.Data)
             
             # Store the submission
             self.config.data.add_submission(
@@ -134,10 +141,14 @@ class RequestHandler(http.server.BaseHTTPRequestHandler):
     def _handle_submission_status(self, root):
         """Handle GetSubmissionStatus request"""
         try:
+            # Get the GetSubmissionStatus element regardless of namespace
+            body = root.Body
+            status_req = body.getchildren()[0]
+            
             # Check if specific submission requested
             submission_id = None
             try:
-                submission_id = str(root.Body.GetSubmissionStatus.SubmissionNumber)
+                submission_id = str(status_req.SubmissionNumber)
             except AttributeError:
                 pass
                 

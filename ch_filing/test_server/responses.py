@@ -57,12 +57,8 @@ class ResponseBuilder:
     @staticmethod
     def build_company_data_response(company_number: str, company_data: Dict):
         """Build a CompanyData response"""
-        cd_ns = "http://xmlgw.companieshouse.gov.uk"
-        maker = objectify.ElementMaker(
-            annotate=False,
-            namespace=cd_ns,
-            nsmap={None: cd_ns}
-        )
+        # Don't use namespace for response elements - client expects them without namespace
+        maker = objectify.ElementMaker(annotate=False)
         
         # Build SIC codes
         sic_codes = maker.SICCodes()
@@ -111,12 +107,8 @@ class ResponseBuilder:
     @staticmethod
     def build_status_response(submissions: List[Dict]):
         """Build a GetSubmissionStatus response"""
-        ss_ns = "http://xmlgw.companieshouse.gov.uk"
-        maker = objectify.ElementMaker(
-            annotate=False,
-            namespace=ss_ns,
-            nsmap={None: ss_ns}
-        )
+        # Don't use namespace for response elements - client expects them without namespace
+        maker = objectify.ElementMaker(annotate=False)
         
         status_elem = maker.SubmissionStatus()
         

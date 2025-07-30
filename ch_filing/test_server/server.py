@@ -1,5 +1,6 @@
 import http.server
 import socketserver
+import socket
 import threading
 import time
 from typing import Optional
@@ -27,8 +28,12 @@ class TestServer:
     def start(self):
         """Start the test server in a background thread"""
         handler = self._create_handler()
-        self.server = socketserver.TCPServer(("", self.port), handler)
-        self.server.allow_reuse_address = True
+        
+        # Create a custom TCP server with SO_REUSEADDR set before bind
+        class ReuseAddrTCPServer(socketserver.TCPServer):
+            allow_reuse_address = True
+            
+        self.server = ReuseAddrTCPServer(("", self.port), handler)
         
         self.thread = threading.Thread(target=self.server.serve_forever)
         self.thread.daemon = True
