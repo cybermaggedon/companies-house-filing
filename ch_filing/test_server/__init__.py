@@ -1,4 +1,4 @@
-from .server import TestServer
+from .server import MockServer
 from .data import TestData
 
-__all__ = ['TestServer', 'TestData']
+__all__ = ['MockServer', 'TestData']

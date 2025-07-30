@@ -7,7 +7,7 @@ from typing import Optional
 from .handlers import RequestHandler
 from .data import TestData
 
-class TestServer:
+class MockServer:
     def __init__(self, 
                  port: int = 8080,
                  presenter_id: str = "TEST_PRESENTER",

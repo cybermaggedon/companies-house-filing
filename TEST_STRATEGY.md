@@ -104,7 +104,7 @@ tests/integration/
 ```python
 def test_accounts_submission_workflow():
     """Test complete accounts submission process"""
-    with TestServer(port=9303) as server:
+    with MockServer(port=9303) as server:
         config = create_test_config(server.get_url())
         state = State(config, "test_state.json")
         client = Client(state)
@@ -195,7 +195,7 @@ tests/e2e/
 ```python
 def test_complete_filing_process():
     """Test filing accounts from command line"""
-    with TestServer(port=9303) as server:
+    with MockServer(port=9303) as server:
         config_file = create_config(server.get_url())
         
         # Submit accounts
@@ -355,7 +355,7 @@ repos:
 @pytest.fixture
 def test_server():
     """Provide test server for integration tests"""
-    with TestServer(port=0) as server:  # port=0 for random port
+    with MockServer(port=0) as server:  # port=0 for random port
         yield server
 
 def test_with_server(test_server):
@@ -366,7 +366,7 @@ def test_with_server(test_server):
 ### For Manual Testing
 ```bash
 # Start test server
-ch-test-server --port 9303
+ch-mock-server --port 9303
 
 # In another terminal, test against it
 ch-filing --config test_config.json --get-company-data
@@ -378,7 +378,7 @@ ch-filing --config test_config.json --get-company-data
 ```python
 def test_concurrent_submissions():
     """Test server can handle concurrent submissions"""
-    with TestServer() as server:
+    with MockServer() as server:
         with ThreadPoolExecutor(max_workers=10) as executor:
             futures = []
             for i in range(100):
