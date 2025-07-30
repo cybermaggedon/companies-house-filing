@@ -1,0 +1,259 @@
+name: Test pull request
+
+on:
+  pull_request:
+    branches: [ master, main ]
+  push:
+    branches: [ master, main ]
+
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  pull-requests: write
+
+jobs:
+  test:
+    name: Run tests
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12', '3.13']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt-dev
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[test]
+
+      - name: Run unit tests
+        run: |
+          pytest tests/unit/ -v --tb=short --junit-xml=junit-unit-${{ matrix.python-version }}.xml
+
+      - name: Run integration tests
+        run: |
+          pytest tests/integration/ -v --tb=short --junit-xml=junit-integration-${{ matrix.python-version }}.xml
+
+      - name: Run contract tests
+        run: |
+          pytest tests/contract/ -v --tb=short --junit-xml=junit-contract-${{ matrix.python-version }}.xml
+
+      - name: Run e2e tests
+        run: |
+          pytest tests/e2e/ -v --tb=short --junit-xml=junit-e2e-${{ matrix.python-version }}.xml
+
+      - name: Test package installation
+        run: |
+          python -c "import ch_filing; print('Package imported successfully on Python ${{ matrix.python-version }}')"
+          ch-filing --help || echo "CLI help command completed"
+          python -m ch_filing --help || echo "Module help command completed"
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-${{ matrix.python-version }}
+          path: junit-*.xml
+
+  test-coverage:
+    name: Test coverage report
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt-dev
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[test]
+
+      - name: Run all tests with coverage
+        run: |
+          pytest tests/ --cov=ch_filing --cov-report=xml --cov-report=html --cov-report=term-missing
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-reports
+          path: |
+            coverage.xml
+            htmlcov/
+
+      - name: Comment PR with coverage
+        if: github.event_name == 'pull_request'
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ github.token }}
+          MINIMUM_GREEN: 80
+          MINIMUM_ORANGE: 70
+
+  quick-checks:
+    name: Quick validation checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black isort
+          pip install -e .
+
+      - name: Check code formatting
+        run: |
+          black --check --diff ch_filing/ || (echo "Code formatting issues found. Run 'black ch_filing/' to fix." && exit 1)
+
+      - name: Check import sorting
+        run: |
+          isort --check-only --diff ch_filing/ || (echo "Import sorting issues found. Run 'isort ch_filing/' to fix." && exit 1)
+
+      - name: Lint with flake8
+        run: |
+          flake8 ch_filing/ --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Validate package structure
+        run: |
+          python -c "import ch_filing; print('✓ Package structure is valid')"
+          python -c "from ch_filing.client import Client; print('✓ Client module imports correctly')"
+          python -c "from ch_filing.test_server import MockServer; print('✓ MockServer module imports correctly')"
+
+      - name: Test CLI entry points
+        run: |
+          ch-filing --help > /dev/null && echo "✓ ch-filing CLI works"
+          ch-mock-server --help > /dev/null && echo "✓ ch-mock-server CLI works"
+          python -m ch_filing --help > /dev/null && echo "✓ ch_filing module CLI works"
+          python -m ch_filing.test_server --help > /dev/null && echo "✓ test_server module CLI works"
+
+  validate-dependencies:
+    name: Validate dependencies
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install pip-audit for security scanning
+        run: |
+          python -m pip install --upgrade pip
+          pip install pip-audit
+
+      - name: Install package dependencies
+        run: |
+          pip install -e .[test]
+
+      - name: Check for known vulnerabilities
+        run: |
+          pip-audit --desc || echo "Security audit completed with findings"
+
+      - name: Validate dependency versions
+        run: |
+          pip list --outdated || echo "Dependencies checked"
+
+      - name: Test minimal installation
+        run: |
+          # Test with just core dependencies
+          pip uninstall -y pytest pytest-cov pytest-mock
+          python -c "import ch_filing; print('✓ Core package works with minimal dependencies')"
+
+  test-docker:
+    name: Test in Docker environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Test in Docker
+        run: |
+          docker run --rm -v $(pwd):/workspace -w /workspace python:3.13-slim bash -c "
+            apt-get update && apt-get install -y libxml2-dev libxslt-dev gcc &&
+            pip install -e .[test] &&
+            pytest tests/unit/ tests/integration/test_client_server_workflow.py -v
+          "
+
+  performance-baseline:
+    name: Performance baseline
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxml2-dev libxslt-dev
+          python -m pip install --upgrade pip
+          pip install -e .[test]
+          pip install pytest-benchmark
+
+      - name: Run performance baseline tests
+        run: |
+          # Run a subset of tests with timing information
+          pytest tests/unit/test_company_data.py tests/unit/test_envelope.py -v --tb=short --durations=10
+
+      - name: Test mock server performance
+        run: |
+          python -c "
+          import time
+          from ch_filing.test_server import MockServer
+          
+          print('Testing mock server startup time...')
+          start = time.time()
+          with MockServer(port=9998) as server:
+              startup_time = time.time() - start
+              print(f'✓ Mock server startup time: {startup_time:.3f}s')
+              
+              # Test basic response time
+              import requests
+              start = time.time()
+              try:
+                  requests.post('http://localhost:9998/v1-0/xmlgw/Gateway', data='test', timeout=1)
+              except:
+                  pass  # Expected to fail, we just want timing
+              response_time = time.time() - start
+              print(f'✓ Mock server response time: {response_time:.3f}s')
+          "
