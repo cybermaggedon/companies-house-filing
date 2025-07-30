@@ -526,6 +526,7 @@ class TestCLIOperations:
         with open(test_state_file) as f:
             final_state = json.load(f)
         
-        # Should have multiple transactions (company data, submit, status, image)
-        assert final_state["transaction-id"] >= 4
+        # Should have multiple transactions (company data, submit, status)
+        # Note: accounts-image is a local operation and doesn't increment transaction ID
+        assert final_state["transaction-id"] >= 3
         assert final_state["submission-id"] >= 1
