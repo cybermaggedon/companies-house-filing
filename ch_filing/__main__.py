@@ -2,7 +2,6 @@
 import sys
 import argparse
 from lxml import objectify
-import os
 
 from ch_filing.client import *
 from ch_filing.state import State
@@ -15,13 +14,13 @@ def main():
 
     # Command-line argument parser
     parser = argparse.ArgumentParser(
-        description="Submittion to Companies house API"
+        description="Submittion to HMRC Corporation Tax API"
     )
     parser.add_argument('--config', '-c',
-                        default='config.json',
+    		        default='config.json',
                         help='Configuration file (default: config.json)')
     parser.add_argument('--state', '-s',
-                        default='state.json',
+    		        default='state.json',
                         help='Transaction counter state (default: state.json)')
     parser.add_argument('--accounts', '-a', 
                         help='Company accounts iXBRL file')
@@ -67,10 +66,7 @@ def main():
             print("Registered Office:")
             print("  Premise:", cd.RegisteredOfficeAddress.Premise)
             print("  Street:", cd.RegisteredOfficeAddress.Street)
-            try:
-                print("  Thoroughfare:", cd.RegisteredOfficeAddress.Thoroughfare)
-            except:
-                pass
+            print("  Thoroughfare:", cd.RegisteredOfficeAddress.Thoroughfare)
             print("  Post town:", cd.RegisteredOfficeAddress.PostTown)
             print("  Postcode:", cd.RegisteredOfficeAddress.Postcode)
             print("  Country:", cd.RegisteredOfficeAddress.Country)
@@ -86,10 +82,7 @@ def main():
             else:
                 raise RuntimeError("--accounts must be specified")
 
-            filename = os.path.basename(args.accounts)
-
-            content = Accounts.create_submission(st, filename, data)
-
+            content = Accounts.create_submission(st, args.accounts, data)
             sub_id = content.FormHeader.SubmissionNumber.text
             env = Envelope.create(st, content,
                                   content.FormHeader.FormIdentifier.text,
@@ -107,7 +100,7 @@ def main():
 
             env = Envelope.create(st, content, "GetSubmissionStatus", "request")
             renv = cli.call(st, env)
-
+        
             for status in renv.Body.SubmissionStatus.Status:
                 print("%s: %s" % (status.SubmissionNumber, status.StatusCode))
 
@@ -151,7 +144,5 @@ def main():
     except Exception as e:
         print("Exception:", e)
 
-
 if __name__ == "__main__":
     main()
-
