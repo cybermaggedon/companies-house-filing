@@ -22,6 +22,13 @@ dependencies = [
     "requests"
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "pytest-mock>=3.0",
+]
+
 [project.urls]
 Homepage = "https://github.com/cybermaggedon/gnucash-ch-filing"
 Repository = "https://github.com/cybermaggedon/gnucash-ch-filing"
@@ -34,3 +41,14 @@ ch-test-server = "ch_filing.test_server.__main__:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["ch_filing*"]
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = [
+    "--strict-markers",
+    "-v",
+]
